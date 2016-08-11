@@ -1,0 +1,22 @@
+{#include file="admin/tema/header.htm"#}
+
+<p>{#sprintf('Esta Seguro que desea Eliminar la Dependencia: "%s"', $dependencia->nombre|string_format:"%s")#}</p>
+
+{#form_open("admin/dependencias/borrar_dependencia/"|cat:$dependencia->id_dependencia)#}
+
+  <p>
+  	{#lang('deactivate_confirm_y_label', 'confirm')#}
+    <input type="radio" name="confirm" value="yes" checked="checked" />
+    {#lang('deactivate_confirm_n_label', 'confirm')#}
+    <input type="radio" name="confirm" value="no" />
+  </p>
+
+  {#*form_hidden(array('id'=>$dependencia->id_dependencia))*#}
+
+  {#form_hidden(['id'=>$dependencia->id_dependencia])#}
+
+
+  <p>{#form_submit($button)#}</p>
+
+	{#form_close()#}
+{#include file="admin/tema/footer.htm"#}

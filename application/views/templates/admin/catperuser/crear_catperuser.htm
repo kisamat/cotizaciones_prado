@@ -1,0 +1,19 @@
+{#include file="admin/tema/header.htm"#}
+
+<p>Crear Categoria</p><br>
+
+
+{#form_open("admin/catperuser/crear_catperuser")#}
+
+      <p>
+            {#form_label('Nombre Categoria','nombre')#} <br />
+            {#form_input($nombre)#}<div id="error">{#form_error('nombre')#}</div><br>
+      </p>
+
+      
+
+      <p>{#form_submit($button)#}</p>
+
+{#form_close()#}
+
+{#include file="admin/tema/footer.htm"#}

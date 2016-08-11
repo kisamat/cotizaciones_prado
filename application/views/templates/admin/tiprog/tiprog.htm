@@ -1,0 +1,27 @@
+           {#include file="admin/tema/header.htm"#}
+  
+
+<table class="table table-bordered" cellpadding=0 cellspacing=10>
+	<tr>
+		<th> Nombre</th>
+		<th> Editar</th>
+		<th> Eliminar</th>
+
+	</tr>
+	{#foreach from=$tiprogs item=$tiprog#}
+		<tr>
+            <td>{#$tiprog->nombre#}</td>
+          
+                 <td>
+                     <a href="{#base_url()#}admin/tiprog/editar_tiprog/{#$tiprog->id_tiprog#}" class="btn btn-warning">Editar</a> <br />                        
+                 </td>
+                 <td>
+                     <a href="{#base_url()#}admin/tiprog/borrar_tiprog/{#$tiprog->id_tiprog#}" class="btn btn-danger">Eliminar</a> <br />                        
+                 </td>
+
+		</tr>
+	{#/foreach#}
+</table>
+
+<p><a href="{#base_url()#}admin/tiprog/crear_tiprog" class="btn btn-info">Crear Nuevo Tipo de Programación</a> 
+           {#include file="admin/tema/footer.htm"#}

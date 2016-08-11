@@ -1,0 +1,24 @@
+{#include file="admin/tema/header.htm"#}
+
+ <!-- Error Message will show up here -->
+{#form_open_multipart(current_url())#}
+
+<span>
+    {#form_label('Agregue la imagen de la Noticia','userfile')#} <br /><br />
+    {#form_upload($userfile)#}<div id="error">{#form_error('userfile')#}</div><br>
+</span><br>
+
+<span>{#form_submit($button)#}</span>
+
+{#form_close()#}
+
+<br><br>
+<h5>Esta es la Imagen asignada</h5> <br>
+<img src="{#base_url()#}userfiles/uploads/{#$noticia->archivo#}" width="100" height="100">
+
+{#include file="admin/tema/footer.htm"#}
+
+
+{#*$noticia|var_dump*#}
+
+

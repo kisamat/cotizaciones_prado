@@ -1,0 +1,38 @@
+{#include file="admin/tema/header.htm"#}
+
+{#if $opcion == 0 #}
+
+<p>{#sprintf('Esta Seguro que desea Eliminar el Espacio: "%s"', $espacio->nombre|string_format:"%s")#}</p>
+
+{#form_open("admin/espacios/borrar_espacio/"|cat:$espacio->id_espacio)#}
+
+  <p>
+  	{#lang('deactivate_confirm_y_label', 'confirm')#}
+    <input type="radio" name="confirm" value="yes" checked="checked" />
+    {#lang('deactivate_confirm_n_label', 'confirm')#}
+    <input type="radio" name="confirm" value="no" />
+  </p>
+
+  {#*form_hidden(array('id'=>$espacio->id_espacio))*#}
+
+  {#form_hidden(['id'=>$espacio->id_espacio])#}
+
+
+  <p>{#form_submit($button)#}</p>
+
+	{#form_close()#}
+        
+{#else#}        
+
+<div id="error">Error al eliminar Espacio</div><br>
+
+
+<p>No es posible eliminar el espacio "{#$espacio->nombre#}"  debido a que tiene espacios hijos dependientes de él</p>
+
+<p>Si desea eliminarlo, primero elimine los espacios hijos dependientes.</p><br><br>
+
+<a href="{#base_url()#}admin/espacios" class="btn btn-success">Regresar</a>        
+
+{#/if#}        
+        
+{#include file="admin/tema/footer.htm"#}

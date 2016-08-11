@@ -1,0 +1,24 @@
+{#include file="admin/tema/header.htm"#}
+
+<p>{#sprintf(lang('deactivate_subheading'), $user->username|string_format:"%s")#}</p>
+
+{#form_open("admin/auth/deactivate/"|cat:$user->id)#}
+
+  <p>
+  	{#lang('deactivate_confirm_y_label', 'confirm')#}
+    <input type="radio" name="confirm" value="yes" checked="checked" />
+    {#lang('deactivate_confirm_n_label', 'confirm')#}
+    <input type="radio" name="confirm" value="no" />
+  </p>
+
+  {#form_hidden($csrf)#}
+  {#*form_hidden(array('id'=>$user->id))*#}
+
+  {#form_hidden(['id'=>$user->id])#}
+
+
+  <p>{#form_submit($button)#}</p>
+
+	{#form_close()#}
+
+{#include file="admin/tema/footer.htm"#}

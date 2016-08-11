@@ -1,0 +1,22 @@
+           {#include file="admin/tema/header.htm"#}
+
+<p>{#sprintf('Esta Seguro que desea Eliminar el Tipo de Programación : "%s"', $tiprog->nombre|string_format:"%s")#}</p>
+
+{#form_open("admin/tiprog/borrar_tiprog/"|cat:$tiprog->id_tiprog)#}
+
+  <p>
+  	{#lang('deactivate_confirm_y_label', 'confirm')#}
+    <input type="radio" name="confirm" value="yes" checked="checked" />
+    {#lang('deactivate_confirm_n_label', 'confirm')#}
+    <input type="radio" name="confirm" value="no" />
+  </p>
+
+  {#*form_hidden(array('id'=>$tiprog->id_tiprog))*#}
+
+  {#form_hidden(['id'=>$tiprog->id_tiprog])#}
+
+
+  <p>{#form_submit($button)#}</p>
+
+	{#form_close()#}
+           {#include file="admin/tema/footer.htm"#}

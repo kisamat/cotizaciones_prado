@@ -1,0 +1,24 @@
+</div>
+             {#include file="admin/tema/modal.htm"#}
+<div class="container col-xs-2 col-md-4 col-lg-4">
+    </div>
+  
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="{#base_url()#}assets/admin/js/jquery.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{#base_url()#}assets/admin/js/bootstrap.min.js"></script>
+
+   {#if isset($smarty.session.message)#}
+<script type="text/javascript">
+
+    $(window).load(function(){
+        $('#myModal').modal('show');
+    });
+
+ 
+</script>
+
+{#/if#}
+  </body>
+</html>
+

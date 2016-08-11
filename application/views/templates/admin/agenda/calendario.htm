@@ -1,0 +1,81 @@
+<script type='text/javascript'>
+
+function editarEvento(ide){
+window.open("agenda/editar_evento/"+ide,"_self")
+}
+
+</script>
+
+<link rel="stylesheet" href="{#base_url()#}assets/admin/calendar/lib/cupertino/jquery-ui.min.css" />
+	<link href="{#base_url()#}assets/admin/calendar/fullcalendar.css" rel="stylesheet" />
+	<link href="{#base_url()#}assets/admin/calendar/fullcalendar.print.css" rel="stylesheet" media="print" />
+	<script src="{#base_url()#}assets/admin/calendar/fullcalendar.min.js"></script>
+	<script src="{#base_url()#}assets/admin/calendar/lib/moment.min.js"></script>
+	<script src="{#base_url()#}assets/admin/calendar/lang-all.js"></script>
+
+<script>
+
+	$(document).ready(function() {
+		
+
+		var currentLangCode = 'es';
+
+		function renderCalendar() {
+			$('#calendar').fullCalendar({
+				header: {
+					left: 'prev,next today',
+					center: 'title',
+					right: 'month,agendaWeek,agendaDay'
+				},
+				//defaultDate: '2016-06-12',
+				 
+				selectable: true,
+				selectHelper: true,
+				select: function(start, end) {	
+											
+				
+				window.open("agenda/crear_evento","_self")
+
+						
+				var eventData;
+				if (title) {
+					eventData = {
+						title: title,
+						start: start,
+						end: end
+					};
+					$('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+				}
+				$('#calendar').fullCalendar('unselect');
+			},
+				lang: currentLangCode,
+				buttonIcons: false, // show the prev/next text
+				weekNumbers: true,
+				editable: true,
+				eventLimit: true, // allow "more" link when too many events
+				events: {#$jason#}
+			});
+		}
+
+		renderCalendar();
+	});
+
+</script>
+<style>
+
+	
+
+	#calendar {
+		max-width: 900px;
+		margin: 40px auto;
+		padding: 0 10px;
+	}
+
+</style>
+
+	
+
+	<div id='calendar'></div>
+
+
+

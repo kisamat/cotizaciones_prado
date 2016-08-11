@@ -1,0 +1,17 @@
+           {#include file="admin/tema/header.htm"#}
+
+<p>Editar Tipo de Programación </p><br>
+
+{#form_open(current_url())#}
+
+     <p>
+            {#form_label('Nombre Tipo de Programación ','nombre')#} <br />
+            {#form_input($nombre)#}<div id="error">{#form_error('nombre')#}</div><br>
+      </p>
+
+      
+
+      <p>{#form_submit($button)#}</p>
+
+{#form_close()#}
+           {#include file="admin/tema/footer.htm"#}

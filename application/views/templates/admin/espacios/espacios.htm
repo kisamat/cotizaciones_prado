@@ -1,0 +1,46 @@
+           {#include file="admin/tema/header.htm"#}
+  
+
+<table class="table table-bordered" cellpadding=0 cellspacing=10>
+    <tr>
+        <th>Espacio</th>
+        <th>Editar</th>
+        <th>Eliminar</th>
+
+    </tr>
+	{#foreach from=$padres item=$padre#}
+		<tr>
+          
+          {#*<td bgcolor= "#dccdcd" ></td>*#}
+                <td bgcolor= "#d2cbcb"><b>{#$padre->nombre#}</b></td>
+                <td>
+                   <a href="{#base_url()#}admin/espacios/editar_espacio/{#$padre->id_espacio#}" class="btn btn-warning">Editar</a> <br />                        
+                </td>
+                <td>        
+                   <a href="{#base_url()#}admin/espacios/borrar_espacio/{#$padre->id_espacio#}" class="btn btn-danger">Eliminar</a> <br />                                   
+                </td>   
+                 
+             {#foreach from=$hijos item=$hijo#}
+            
+            {#if $padre->id_espacio==$hijo->id_padre#}
+                <tr>
+                {#* <td bgcolor= "#52db40">{#$padre->nombre#}</td> *#}  
+                <td>{#$hijo->nombre#}</td>         
+           <td>
+                     <a href="{#base_url()#}admin/espacios/editar_espacio/{#$hijo->id_espacio#}" class="btn btn-warning">Editar</a> <br />                        
+                 </td>
+                 <td>
+                     <a href="{#base_url()#}admin/espacios/borrar_espacio/{#$hijo->id_espacio#}" class="btn btn-danger">Eliminar</a> <br />                        
+                 </td>
+                </tr>
+                
+            {#/if#}
+                
+            {#/foreach#}    
+                 
+		</tr>
+	{#/foreach#}
+</table>
+
+<p><a href="{#base_url()#}admin/espacios/crear_espacio" class="btn btn-info">Crear Nuevo Espacio</a> 
+           {#include file="admin/tema/footer.htm"#}

@@ -1,0 +1,20 @@
+{#include file="admin/tema/header.htm"#}
+
+<p>{#sprintf('Esta Seguro que desea Eliminar la Noticia: "%s"', $noticia->titulo|string_format:"%s")#}</p>
+
+{#form_open("admin/noticias/borrar_noticia/"|cat:$noticia->id_noticia)#}
+
+  <p>
+  	{#lang('deactivate_confirm_y_label', 'confirm')#}
+    <input type="radio" name="confirm" value="yes" checked="checked" />
+    {#lang('deactivate_confirm_n_label', 'confirm')#}
+    <input type="radio" name="confirm" value="no" />
+  </p>
+
+  {#form_hidden(['id'=>$noticia->id_noticia])#}
+
+
+  <p>{#form_submit($button)#}</p>
+
+	{#form_close()#}
+{#include file="admin/tema/footer.htm"#}

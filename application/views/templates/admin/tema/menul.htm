@@ -1,0 +1,31 @@
+<div class="collapse navbar-collapse navbar-ex1-collapse">
+    <ul class="nav navbar-nav side-nav">
+        <li>
+            <p style="color:#fff">::Administrador de Contenidos::</p>            
+        </li>           
+        <li>
+            <a href="{#base_url()#}admin/auth"><i class="fa fa-fw fa-dashboard"></i> Inicio</a>
+        </li>			
+
+        {#foreach from=$listado item=menu#} 
+            {#if $menu->tipo==0#}
+            <li>
+                <a href="{#base_url()#}admin/{#$menu->link#}"><i class="{#$menu->class#}"></i> {#$menu->name#}</a>
+            </li>        
+            {#elseif $menu->tipo==1#}
+            <li>
+                <a href="javascript:;" data-toggle="collapse" data-target="#demo{#$menu->menu_id#}"><i class="{#$menu->class#}"></i> {#$menu->name#} <i class="fa fa-fw fa-caret-down"></i></a>
+                <ul id="demo{#$menu->menu_id#}" class="collapse">
+                    {#foreach from=$listado item=lista#}
+                        {#if $menu->menu_id == $lista->tipo #}
+                        <li>
+                            <a href="{#base_url()#}admin/{#$lista->link#}"><i class="{#$lista->class#}"></i> {#$lista->name#}</a>
+                        </li>
+                        {#/if #}
+                    {#/foreach#}
+                </ul>
+            </li>
+            {#/if #}
+        {#/foreach#} 
+    </ul>
+</div>

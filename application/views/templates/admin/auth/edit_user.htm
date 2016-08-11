@@ -1,0 +1,68 @@
+           {#include file="admin/tema/header.htm"#}
+
+<p>{#lang('edit_user_subheading')#}</p>
+
+{#form_open(uri_string())#}
+
+      <p>
+            {#lang('edit_user_fname_label', 'first_name')#} <br />
+            {#form_input($first_name)#}<div id="error">{#form_error('first_name') #}</div><br>
+      </p>
+
+      <p>
+            {#lang('edit_user_lname_label', 'last_name')#} <br />
+            {#form_input($last_name)#}<div id="error">{#form_error('last_name') #}</div><br>
+      </p>
+
+      <p>
+            {#lang('edit_user_company_label', 'company')#} <br />
+            {#form_input($company)#}<div id="error">{#form_error('company') #}</div><br>
+      </p>
+
+      <p>
+            {#lang('edit_user_phone_label', 'phone')#} <br />
+            {#form_input($phone)#}<div id="error">{#form_error('phone') #}</div><br>
+      </p>
+
+      <p>
+            {#lang('edit_user_password_label', 'password')#} <br />
+            {#form_input($password)#}
+      </p>
+
+      <p>
+            {#lang('edit_user_password_confirm_label', 'password_confirm')#}<br />
+            {#form_input($password_confirm)#}
+      </p>
+
+      {#if $admin #}
+
+          <h3>{#lang('edit_user_groups_heading')#}</h3>
+          {#foreach from=$groups item=$group#}
+              <label class="checkbox">
+
+		{#assign var="gID" value=$group['id']#}
+		{#assign var="checked" value="null"#}
+		{#assign var="item" value="null"#}
+
+                  {#foreach from=$currentGroups item=$grp#}
+                      {#if $gID == $grp->id#} 
+			{#assign var="checked" value=' checked="checked"'#}
+                      {#break#} 
+                      {#/if#}
+                  {#/foreach#}
+
+              <input type="checkbox" name="groups[]" value="{#$group['id']#}"{#$checked#}>
+              {#$group['name']#}
+              </label>
+          {#/foreach#}
+
+      {#/if#}
+
+      {#form_hidden('id', $user->id)#}
+      {#form_hidden($csrf) #}
+
+      <p>{#form_submit($button)#}</p>
+
+{#form_close()#}
+
+           {#include file="admin/tema/footer.htm"#}

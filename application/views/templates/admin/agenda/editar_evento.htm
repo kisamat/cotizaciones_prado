@@ -1,0 +1,205 @@
+{#include file="admin/tema/header.htm"#}
+<script type="text/javascript">
+window.addEventListener('load', espacio, false);
+
+    function espacio() {
+        var esp_selected = '{#$id_instalacion#}';
+        var espacio = '{#$id_espacio#}';
+        var path = '{#base_url()#}';
+        $.ajax({
+            data: {
+                esp_selected: esp_selected,
+                espacio: espacio 
+            },
+            type: 'POST',
+            url: path + 'admin/agenda/espacios/' + esp_selected + '/' + espacio,
+            success: function (data) {
+                console.log(data);
+                $('.subespacio').html(data);
+            }
+        })
+    }
+
+</script>
+
+
+
+<script type="text/javascript">
+
+    function espacios() {
+        var esp_selected = $('select[name=instalacion]').val();
+        var path = '{#base_url()#}';
+        $.ajax({
+            data: {
+                esp_selected: esp_selected,
+            },
+            type: 'POST',
+            url: path + 'agenda/espacio/' + esp_selected,
+            success: function (data) {
+                console.log(data);
+                $('.subespacio').html(data);
+            }
+        })
+    }
+
+</script>
+
+{#*$id_dependencia|@print_r*#}
+
+
+{#form_open(current_url())#}
+
+<p>
+    {#form_label('Seleccione la Categoria','categoria')#} <br />
+    {#form_dropdown($categoria, $categorias, $id_categoria)#}<div id="error">{#form_error('categoria')#}</div><br>
+</p>
+
+<p>
+    {#form_label('Escoja la Dependencia','dependencia')#} <br />
+    {#form_dropdown($dependencia, $dependencias, $id_dependencia)#}<div id="error">{#form_error('dependencia')#}</div><br> 
+</p>
+<p>
+    {#form_label('Escoja Tipos de Programación','tiprog')#} <br />
+    {#form_dropdown($tiprog, $tiprogs, $id_tiprog)#}<div id="error">{#form_error('tiprog')#}</div><br> 
+</p>
+
+<p>
+    {#form_label('Escoja la Instalacion','instalacion')#} <br />
+    {#form_dropdown($instalacion, $instalaciones, $id_instalacion)#}<div id="error">{#form_error('instalacion')#}</div><br>
+</p>
+
+<div class="subespacio"></div><div id='error'>{#form_error('espacio')#}</div><br />
+
+
+<p>
+    {#form_label('Escriba el Titulo del Evento','titulo')#} <br />
+    {#form_input($titulo)#}<div id="error">{#form_error('titulo')#}</div><br>
+</p>
+
+
+<div class="row">    
+    <div class='col-md-7'>
+        <div class="form-group">
+            {#form_label('Escoja la Fecha Inicial','fechai')#}
+            <div class='input-group date' id='datetimepicker6'>                
+                {#form_input($fechai)#}
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>                
+            </div>
+            <div id="error">{#form_error('fechai')#}</div><br>
+        </div>
+    </div>
+
+    <div class='col-md-5'>
+        <div class="form-group">
+            {#form_label('Escoja la Hora Inicial','horai')#}
+            <div class='input-group date' id='datetimepicker8'>
+                {#form_input($horai)#}            
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+            <div id="error">{#form_error('horai')#}</div><br>
+        </div>
+    </div>
+
+
+
+    <div class='col-md-7'>
+        <div class="form-group">
+            {#form_label('Escoja la Fecha Final','fechaf')#}
+            <div class='input-group date' id='datetimepicker7'>
+                {#form_input($fechaf)#} 
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+            <div id="error">{#form_error('fechaf')#}</div><br>
+        </div>
+    </div>
+
+
+    <div class='col-md-5'>
+        <div class="form-group">
+            {#form_label('Escoja la Hora Final','horaf')#}
+            <div class='input-group date' id='datetimepicker9'>
+                {#form_input($horaf)#}     
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+            <div id="error">{#form_error('horaf')#}</div><br>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    {#form_label('Descripción del Evento','description')#}
+    {#form_textarea($descripcion)#}<div id="error">{#form_error('descripcion')#}</div><br>
+</div>		
+
+<p>{#form_submit($button)#}| <a href="{#base_url()#}admin/agenda/borrar_evento/{#$id_evento#}" class="btn btn-danger">Eliminar Evento </a> <br /></p>
+
+{#form_close()#}
+
+
+
+{#include file="admin/tema/footer.htm"#}
+
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker6').datetimepicker({
+            locale: 'es',
+            format: 'YYYY-MM-DD',
+        });
+
+        $('#datetimepicker7').datetimepicker({
+            useCurrent: false, //Important! See issue #1075
+            locale: 'es',
+            format: 'YYYY-MM-DD',
+        });
+
+        $('#datetimepicker8').datetimepicker({
+            locale: 'es',
+            format: 'LT',
+        });
+
+        $('#datetimepicker9').datetimepicker({
+            useCurrent: false, //Important! See issue #1075
+            locale: 'es',
+            format: 'LT',
+        });
+
+
+        $("#datetimepicker6").on("dp.change", function (e) {
+            $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
+        });
+        $("#datetimepicker7").on("dp.change", function (e) {
+            $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
+        });
+
+
+        $("#datetimepicker8").on("dp.change", function (e) {
+            $('#datetimepicker9').data("DateTimePicker").minDate(e.date);
+        });
+        $("#datetimepicker9").on("dp.change", function (e) {
+            $('#datetimepicker8').data("DateTimePicker").maxDate(e.date);
+        });
+
+
+
+    });
+</script>
+
+<script>
+  //<![CDATA[
+    CKEDITOR.replace('descripcion', {"toolbar": "Full", 
+"language": "es", 
+"filebrowserBrowseUrl": "{#base_url()#}lib/ckfinder/ckfinder.html", 
+"filebrowserImageBrowseUrl": "{#base_url()#}libs/ckfinder/ckfinder.html?type=Images", 
+"filebrowserFlashBrowseUrl": "{#base_url()#}libs/ckfinder/ckfinder.html?type=Flash", 
+"filebrowserUploadUrl": "{#base_url()#}libs/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files", 
+"filebrowserImageUploadUrl": "{#base_url()#}libs/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images", 
+"filebrowserFlashUploadUrl": "{#base_url()#}libs/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash"});
+//]]>
+</script>

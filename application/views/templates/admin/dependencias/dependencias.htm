@@ -1,0 +1,29 @@
+           {#include file="admin/tema/header.htm"#}
+  
+
+<table class="table table-bordered" cellpadding=0 cellspacing=10>
+	<tr>
+		<th> Nombre</th>
+		<th> Editar</th>
+		<th> Eliminar</th>
+
+	</tr>
+	{#foreach from=$dependencias item=$dependencia#}
+		<tr>
+            <td>{#$dependencia->nombre#}</td>
+          
+                 <td>
+                     <a href="{#base_url()#}admin/dependencias/editar_dependencia/{#$dependencia->id_dependencia#}" class="btn btn-warning">Editar</a> <br />                        
+                 </td>
+                 <td>
+                     <a href="{#base_url()#}admin/dependencias/borrar_dependencia/{#$dependencia->id_dependencia#}" class="btn btn-danger">Eliminar</a> <br />                        
+                 </td>
+
+		</tr>
+	{#/foreach#}
+</table>
+
+
+
+<p><a href="{#base_url()#}admin/dependencias/crear_dependencia" class="btn btn-info">Crear Nueva Dependencia</a> 
+           {#include file="admin/tema/footer.htm"#}

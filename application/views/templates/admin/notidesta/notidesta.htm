@@ -1,0 +1,244 @@
+{#include file="admin/tema/header.htm"#}
+
+<style type="text/css">
+    #full{
+        width:100%;
+        height:100%;
+        align-items: left;
+    }
+    
+    #cuerpo {
+        width:450px;
+        height:450px;
+        float:left;
+    }
+
+    #antiguas {
+        width:450px;
+       
+        float:right;
+        align-items: right;
+        text-align: right;
+    }
+    
+    #espacio {
+        width:200px;
+        height:200px;
+        float:left;
+    }
+
+    #caja32{
+        border-style: solid;
+        background-color: #d2cbcb;
+        float:left;        
+        width:150px;
+        height:150px;
+        align-items: center;
+        text-align: center;
+        
+    }
+    #caja33{
+
+        float:left;        
+        width:150px;
+        height:150px;
+        align-items: center;
+        text-align: center;
+        
+    }
+ #botones {
+        width:100%;
+        height:auto;
+        float:right;
+    }
+
+</style>
+
+<h3>Noticias Destacadas</h3>
+<div class="table-responsive">
+
+  <table style="width: 100%"  class="table">
+      <tbody>
+        <tr>
+          <td>
+          
+<h3>Por favor Cree las Noticias en el orden de la secuencia de 2 a 8</h3>
+<br>
+{#*$notides|print_r*#}
+<div id="full">
+    
+<div id="cuerpo">
+  
+    {#for $foo=1 to 9#}   
+        {#if $foo%2==0 #}
+        
+            {#if $foo==2 #}
+            
+               
+                {#if isset($notides[0])#}            
+                    <div id="caja32" onclick="location.href = '{#base_url()#}admin/notidesta/crear_notidesta/{#$foo#}'" style="cursor:pointer;">
+                    <div id="cabeza_caja">{#$notides[0].titulo#}</div>
+                    <div id="cuerpo_caja"> <img src="{#base_url()#}userfiles/uploads/{#$notides[0].imagen#}" border="0" width="120" height="120"></div>                
+                    </div>
+                {#else#}    
+                    <div id="caja32" onclick="location.href = '{#base_url()#}admin/notidesta/crear_notidesta/{#$foo#}'" style="cursor:pointer;">
+                    <div id="cabeza_caja"> &nbsp</div>
+                    <div id="cuerpo_caja"> <h1>{#$foo#}</h1></div>
+                    </div>
+                {#/if#}
+            {#elseif $foo==4#}
+                {#if isset($notides[1])#} 
+                    <div id="caja32" onclick="location.href = '{#base_url()#}admin/notidesta/crear_notidesta/{#$foo#}'" style="cursor:pointer;">
+                    <div id="cabeza_caja">{#$notides[1].titulo#}</div>
+                    <div id="cuerpo_caja"> <img src="{#base_url()#}userfiles/uploads/{#$notides[1].imagen#}" border="0" width="120" height="120"></div>                                
+                    </div>
+                {#else#}    
+                    <div id="caja32" onclick="location.href = '{#base_url()#}admin/notidesta/crear_notidesta/{#$foo#}'" style="cursor:pointer;">
+                    <div id="cabeza_caja"> &nbsp</div>
+                    <div id="cuerpo_caja"> <h1>{#$foo#}</h1></div>
+                    </div>
+                {#/if#}
+            {#elseif $foo==6#}
+                {#if isset($notides[2])#} 
+                    <div id="caja32" onclick="location.href = '{#base_url()#}admin/notidesta/crear_notidesta/{#$foo#}'" style="cursor:pointer;">
+                    <div id="cabeza_caja">{#$notides[2].titulo#}</div>
+                    <div id="cuerpo_caja"> <img src="{#base_url()#}userfiles/uploads/{#$notides[2].imagen#}" border="0" width="120" height="120"></div>                
+                    </div>
+                {#else#}    
+                    <div id="caja32" onclick="location.href = '{#base_url()#}admin/notidesta/crear_notidesta/{#$foo#}'" style="cursor:pointer;">
+                    <div id="cabeza_caja"> &nbsp</div>
+                    <div id="cuerpo_caja"> <h1>{#$foo#}</h1></div>
+                    </div>
+                {#/if#}
+            {#elseif $foo==8#}
+                {#if isset($notides[3])#} 
+                    <div id="caja32" onclick="location.href = '{#base_url()#}admin/notidesta/crear_notidesta/{#$foo#}'" style="cursor:pointer;">
+                    <div id="cabeza_caja">{#$notides[3].titulo#}</div>
+                    <div id="cuerpo_caja"> <img src="{#base_url()#}userfiles/uploads/{#$notides[3].imagen#}" border="0" width="120" height="120"></div>                
+                    </div>
+                {#else#}    
+                    <div id="caja32" onclick="location.href = '{#base_url()#}admin/notidesta/crear_notidesta/{#$foo#}'" style="cursor:pointer;">
+                    <div id="cabeza_caja"> &nbsp</div>
+                    <div id="cuerpo_caja"> <h1>{#$foo#}</h1></div>
+                    </div>
+                {#/if#}
+            {#else#}
+                    <div id="caja32" onclick="location.href = '{#base_url()#}admin/notidesta/crear_notidesta/{#$foo#}'" style="cursor:pointer;">
+                    <div id="cabeza_caja"> &nbsp</div>
+                    <div id="cuerpo_caja"> <h1>{#$foo#}</h1></div>
+                    </div>                
+            {#/if#}
+       
+        {#else#}
+        
+            {#if $foo==1 #}
+                {#if isset($fijas[0])#}            
+                    <div id="caja33">
+                    <div id="cabeza_caja">{#$fijas[0].titulo#}</div>
+                    <div id="cuerpo_caja"> <img src="{#base_url()#}userfiles/uploads/{#$fijas[0].imagen#}" border="0" width="120" height="120"></div>                
+                    </div>
+                {#else#}    
+                    <div id="caja33">
+                    <div id="cabeza_caja"> &nbsp</div>
+                    <div id="cuerpo_caja"> &nbsp</div>
+                    </div>
+                {#/if#}
+            {#elseif $foo==3#}
+                {#if isset($fijas[1])#} 
+                    <div id="caja33">
+                    <div id="cabeza_caja">{#$fijas[1].titulo#}</div>
+                    <div id="cuerpo_caja"> <img src="{#base_url()#}userfiles/uploads/{#$fijas[1].imagen#}" border="0" width="120" height="120"></div>                                
+                    </div>
+                {#else#}    
+                    <div id="caja33">
+                    <div id="cabeza_caja"> &nbsp</div>
+                    <div id="cuerpo_caja"> &nbsp</div>
+                    </div>
+                {#/if#}
+            {#elseif $foo==5#}
+                {#if isset($fijas[2])#} 
+                    <div id="caja33">
+                    <div id="cabeza_caja">{#$fijas[2].titulo#}</div>
+                    <div id="cuerpo_caja"> <img src="{#base_url()#}userfiles/uploads/{#$fijas[2].imagen#}" border="0" width="120" height="120"></div>                
+                    </div>
+                {#else#}    
+                    <div id="caja33">
+                    <div id="cabeza_caja"> &nbsp</div>
+                    <div id="cuerpo_caja"> &nbsp</div>
+                    </div>
+                {#/if#}
+            {#elseif $foo==7#}
+                {#if isset($fijas[3])#} 
+                    <div id="caja33">
+                    <div id="cabeza_caja">{#$fijas[3].titulo#}</div>
+                    <div id="cuerpo_caja"> <img src="{#base_url()#}userfiles/uploads/{#$fijas[3].imagen#}" border="0" width="120" height="120"></div>                
+                    </div>
+                {#else#}    
+                    <div id="caja33">
+                    <div id="cabeza_caja"> &nbsp</div>
+                    <div id="cuerpo_caja"> &nbsp</div>
+                    </div>
+                {#/if#}
+                
+            {#elseif $foo==9#}
+                {#if isset($fijas[4])#} 
+                    <div id="caja33">
+                    <div id="cabeza_caja">{#$fijas[4].titulo#}</div>
+                    <div id="cuerpo_caja"> <img src="{#base_url()#}userfiles/uploads/{#$fijas[4].imagen#}" border="0" width="120" height="120"></div>                
+                    </div>
+                {#else#}    
+                    <div id="caja33">
+                    <div id="cabeza_caja"> &nbsp</div>
+                    <div id="cuerpo_caja"> &nbsp</div>
+                    </div>
+                {#/if#}
+                
+            {#else#}
+                    <div id="caja33">
+            <div id="cabeza_caja"> &nbsp</div>
+            <div id="cuerpo_caja"> &nbsp</div>
+            </div>               
+            {#/if#}
+      {#*  
+            <div id="caja33">
+            <div id="cabeza_caja"> &nbsp</div>
+            <div id="cuerpo_caja"> &nbsp</div>
+            </div>
+       *#} 
+        
+        {#/if#}   
+    {#/for#}   
+</div>
+  </td>
+          <td>
+    
+    
+{#if isset($antiguas)#} 
+    
+    <div id="antiguas">
+        <h3>Modulo Noticias</h3>
+    <br>
+        {#for $foo=0 to 8#} 
+            <div id="caja33">
+            <div id="cabeza_caja"> {#$antiguas[$foo].titulo#}</div>
+            <div id="cuerpo_caja"> <img src="{#base_url()#}userfiles/uploads/{#$antiguas[$foo].imagen#}" border="0" width="120" height="120"></div>
+            </div>
+        {#/for#} 
+    </div>
+    
+
+{#/if#} 
+</div>
+  </td>
+        </tr>
+      </tbody>
+    </table>
+    
+</div>    
+<div id="botones">
+    <br>
+<a href="{#base_url()#}admin/notidesta/limpiar" class="btn btn-lg btn-info">Limpiar</a> | 
+<a href="{#base_url()#}admin/notidesta/completar" class="btn btn-lg btn-primary">Completar</a> |
+<a href="{#base_url()#}admin/notidesta/aplicar" class="btn btn-lg btn-success">Aplicar</a> 
+</div>
+{#include file="admin/tema/footer.htm"#}

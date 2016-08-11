@@ -1,0 +1,22 @@
+{#include file="admin/tema/header.htm"#}
+
+<p>{#lang('edit_group_subheading')#}</p>
+
+{#form_open(current_url())#}
+
+      <p>
+            {#lang('edit_group_name_label', 'group_name')#} <br />
+            {#form_input($group_name)#}<div id="error">{#form_error('group_name') #}</div><br>
+      </p>
+
+      <p>
+            {#lang('edit_group_desc_label', 'description')#} <br />
+            {#form_input($group_description)#}<div id="error">{#form_error('description') #}</div><br>
+      </p>
+
+      <p>{#form_submit($button)#}</p>
+
+{#form_close()#}
+
+
+  {#include file="admin/tema/footer.htm"#}

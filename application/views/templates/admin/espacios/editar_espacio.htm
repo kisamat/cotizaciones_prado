@@ -1,0 +1,24 @@
+{#include file="admin/tema/header.htm"#}
+
+<p>Crear Espacio</p><br>
+
+
+{#form_open(current_url())#}
+
+<div class="form-group">
+        <p>
+            {#form_label('Escoja el Espacio Padre','id_padre')#} <br />
+            {#form_dropdown($id_padre, $padres, $valor)#}<br>    
+        </p>
+      <p>
+            {#form_label('Nombre Espacio','nombre')#} <br />
+            {#form_input($nombre)#}<div id="error">{#form_error('nombre')#}</div><br>
+      </p>
+</div>
+      
+
+      <p>{#form_submit($button)#}</p>
+
+<?php echo form_close();?>
+
+{#include file="admin/tema/footer.htm"#}

@@ -1,0 +1,27 @@
+           {#include file="admin/tema/header.htm"#}
+  
+
+<table class="table table-bordered" cellpadding=0 cellspacing=10>
+	<tr>
+		<th> Nombre</th>
+		<th> Editar</th>
+		<th> Eliminar</th>
+
+	</tr>
+	{#foreach from=$categorias item=$categoria#}
+		<tr>
+            <td>{#$categoria->nombre#}</td>
+          
+                 <td>
+                     <a href="{#base_url()#}admin/catperuser/editar_catperuser/{#$categoria->id_catperuser#}" class="btn btn-warning">Editar</a> <br />                        
+                 </td>
+                 <td>
+                     <a href="{#base_url()#}admin/catperuser/borrar_catperuser/{#$categoria->id_catperuser#}" class="btn btn-danger">Eliminar</a> <br />                        
+                 </td>
+
+		</tr>
+	{#/foreach#}
+</table>
+
+<p><a href="{#base_url()#}admin/catperuser/crear_catperuser" class="btn btn-info">Crear Nueva Categoria</a> 
+           {#include file="admin/tema/footer.htm"#}

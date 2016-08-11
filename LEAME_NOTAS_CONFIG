@@ -1,0 +1,45 @@
+PARA QUITAR DE LAS URL'S EL INDEX.PHP
+
+Editar el archivo
+
+gedit /etc/apache2/apache2.conf
+
+cambiar
+
+<Directory /var/www/>
+	Options Indexes FollowSymLinks
+	AllowOverride None
+	Require all granted
+</Directory>
+
+por 
+
+<Directory /var/www/>
+	Options Indexes FollowSymLinks
+	AllowOverride All
+	Require all granted
+</Directory>
+
+EN EL ARCHIVO
+
+/application/config/config.php
+
+cambiar
+
+$config['index_page'] = 'index.php';
+
+por 
+
+$config['index_page'] = '';
+
+EN EL ARCHIVO .htaccess ESCRIBIR
+
+RewriteEngine on
+
+RewriteCond %{REQUEST_FILENAME} !-f
+
+RewriteCond $1 !^(index.php)
+
+RewriteRule ^(.*)$ index.php/$1 [L]
+
+

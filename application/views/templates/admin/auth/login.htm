@@ -1,0 +1,33 @@
+{#include file="admin/auth/header.htm"#}
+
+
+		<h2 class='form-signin-heading'>Administrador de Contenidos</h2><br><br>
+		<p>{#lang('login_subheading')#}</p>
+
+
+
+		{#form_open("auth/login")#}
+
+		  <p>
+		    {#lang('login_identity_label', 'identity')#}
+		    {#form_input($identity)#}<div id="error">{#form_error('identity') #}</div><br>
+		  </p>
+
+		  <p>
+		    {#lang('login_password_label', 'password')#}
+		    {#form_input($password)#}<div id="error">{#form_error('password')#}</div><br>
+		  </p>
+
+		  <p>
+		    {#lang('login_remember_label', 'remember')#}
+		    {#form_checkbox('remember', '1', FALSE, 'id="remember"')#}
+		  </p>
+
+
+		  <p>{#form_submit($button)#}</p>
+
+		{#form_close()#}
+
+		<p><a href="forgot_password">{#lang('login_forgot_password')#}</a></p>
+
+  {#include file="admin/auth/footer.htm"#}

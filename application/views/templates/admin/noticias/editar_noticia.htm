@@ -1,0 +1,33 @@
+{#include file="admin/tema/header.htm"#}
+
+{#form_open(current_url())#}
+
+<span>
+    {#form_label('Seleccione la Categoria de la Noticia','categnot')#} <br />
+    {#form_dropdown($categnot, $categnots, $noticia->id_categnot)#}<div id="error">{#form_error('categnot')#}</div><br>
+</span>
+
+<span>
+    {#form_label('Seleccione la Opcion de Presentación la Noticia','opcion')#} <br />
+    {#form_dropdown($opcion, $opciones, $noticia->opcion)#}<div id="error">{#form_error('opcion')#}</div><br>
+</span>
+
+<span>
+    {#form_label('Escriba el Titulo de la Noticia','titulo')#} <br />
+    {#form_input($titulo)#}<div id="error">{#form_error('titulo')#}</div><br>
+</span>
+
+<span>
+    {#form_label('Escriba la URL de la Noticia','url')#} <br />
+    {#form_input($url)#}<div id="error">{#form_error('url')#}</div><br>
+</span>
+
+<div class="form-group">
+    {#form_label('Descripción de la Noticia','description')#}
+    {#form_input($descripcion)#}<div id="error">{#form_error('descripcion')#}</div><br>
+</div>	    
+
+<span>{#form_submit($button)#}</span>
+
+{#form_close()#}
+{#include file="admin/tema/footer.htm"#}

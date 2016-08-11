@@ -1,0 +1,25 @@
+
+<div id="myModal" class="modal fade" aria-labelledby="myModalLabel" aria-hidden="true" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+          
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title"><b>Mensaje</b></h4>
+            </div>
+            
+            <div class="modal-body" id="myModalBody">
+                
+                {#if empty($smarty.session.message)#}
+                <div id="alert-msg"></div>
+                {#else#}                
+                <div id="alert-msg">{#$smarty.session.message#}</div>
+                {#/if#}
+            </div>
+            <div class="modal-footer">
+                <input class="btn btn-default" type="button" data-dismiss="modal" value="Close" />
+            </div>
+
+        </div>
+    </div>
+</div>

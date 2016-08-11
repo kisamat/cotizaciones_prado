@@ -1,0 +1,20 @@
+{#include file="admin/tema/header.htm"#}
+
+<p>{#sprintf('Esta Seguro que desea Eliminar El evento: "%s"', $evento->titulo|string_format:"%s")#}</p>
+
+{#form_open("admin/agenda/borrar_evento/"|cat:$evento->id_evento)#}
+
+  <p>
+  	{#lang('deactivate_confirm_y_label', 'confirm')#}
+    <input type="radio" name="confirm" value="yes" checked="checked" />
+    {#lang('deactivate_confirm_n_label', 'confirm')#}
+    <input type="radio" name="confirm" value="no" />
+  </p>
+
+  {#form_hidden(['id'=>$evento->id_evento])#}
+
+
+  <p>{#form_submit($button)#}</p>
+
+	{#form_close()#}
+{#include file="admin/tema/footer.htm"#}
