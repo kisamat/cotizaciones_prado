@@ -10,16 +10,16 @@
         {#foreach from=$listado item=menu#} 
             {#if $menu->tipo==0#}
             <li>
-                <a href="{#base_url()#}admin/{#$menu->link#}"><i class="{#$menu->class#}"></i> {#$menu->name#}</a>
+                <a href="{#base_url()#}admin/{#$menu->link#}/index/{#$menu->menu_id#}"><i class="{#$menu->class#}"></i> {#$menu->name#}</a>
             </li>        
             {#elseif $menu->tipo==1#}
             <li>
                 <a href="javascript:;" data-toggle="collapse" data-target="#demo{#$menu->menu_id#}"><i class="{#$menu->class#}"></i> {#$menu->name#} <i class="fa fa-fw fa-caret-down"></i></a>
-                <ul id="demo{#$menu->menu_id#}" class="collapse">
+                <ul id="demo{#$menu->menu_id#}" {#if isset($idmenu) && ($idmenu==$menu->menu_id)#}class=""{#else#}class="collapse"{#/if#}>
                     {#foreach from=$listado item=lista#}
                         {#if $menu->menu_id == $lista->tipo #}
                         <li>
-                            <a href="{#base_url()#}admin/{#$lista->link#}"><i class="{#$lista->class#}"></i> {#$lista->name#}</a>
+                            <a href="{#base_url()#}admin/{#$lista->link#}/index/{#$menu->menu_id#}"><i class="{#$lista->class#}"></i> {#$lista->name#}</a>
                         </li>
                         {#/if #}
                     {#/foreach#}

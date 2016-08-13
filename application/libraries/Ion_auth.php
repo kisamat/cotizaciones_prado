@@ -540,9 +540,25 @@ class Ion_auth
 		return $check_all;
 	}
 
-        public function menu_group($id){         
-            $menu=$this->ion_auth_model->get_menu_group($id);
+        public function menu_group($user){
+
+            $idgroup=$this->ion_auth_model->get_id_group($user->id)->row();
+            $menu=$this->ion_auth_model->get_menu_group($idgroup->id);
             return $menu;
+        }
+        public function validate_admin(){
+            if (!$this->logged_in()) {
+            // redirect them to the login page
+                redirect('admin/auth/login', 'refresh');
+            } elseif (!$this->is_admin()) { // remove this elseif if you want to enable this for non-admins
+                redirect('admin/auth', 'refresh');
+            }
+        }
+        public function validate_login(){
+            if (!$this->logged_in()) {
+            // redirect them to the login page
+                redirect('admin/auth/login', 'refresh');
+            }
         }
         
         

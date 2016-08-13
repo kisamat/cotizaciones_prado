@@ -184,7 +184,7 @@ class Ion_auth_model extends CI_Model
 		$this->identity_column = $this->config->item('identity', 'ion_auth');
 		$this->store_salt      = $this->config->item('store_salt', 'ion_auth');
 		$this->salt_length     = $this->config->item('salt_length', 'ion_auth');
-		$this->join			   = $this->config->item('join', 'ion_auth');
+		$this->join	       = $this->config->item('join', 'ion_auth');
 
 
 		// initialize hash method options (Bcrypt)
@@ -1407,8 +1407,27 @@ class Ion_auth_model extends CI_Model
 		                ->join($this->tables['groups'], $this->tables['users_groups'].'.'.$this->join['groups'].'='.$this->tables['groups'].'.id')
 		                ->get($this->tables['users_groups']);
 	}
+        
+        /**      
+         * get_id_group
+         * 
+         * 
+         * @return int
+         * @author Fernando Vargas
+        **/
+        public function get_id_group($id=FALSE){
+		$this->trigger_events('get_id_group');
 
-	/**
+		// if no id was passed use the current users id
+		$id || $id = $this->session->userdata('user_id');
+                
+		return $this->db->select($this->tables['users_groups'].'.'.$this->join['groups'].' as id')
+		                ->where($this->tables['users_groups'].'.'.$this->join['users'], $id)
+		                ->join($this->tables['groups'], $this->tables['users_groups'].'.'.$this->join['groups'].'='.$this->tables['groups'].'.id')
+		                ->get($this->tables['users_groups']);            
+        }
+
+        /**
 	 * add_to_group
 	 *
 	 * @return bool
@@ -2253,16 +2272,10 @@ class Ion_auth_model extends CI_Model
 		return $ip_address;
 	}
         
-        public function get_menu_group($id_usuario){
-            if($id_usuario==1){
-                 $query = $this->db->query("SELECT * FROM admin_menu_group order by name;");
-                 return $query->result();
-                
-            }else{
-
-                 $query = $this->db->query("SELECT * FROM admin_menu_group where group_id = 2 order by name;");                
-                 return $query->result();                
-            }
+        public function get_menu_group($id_grupo){
+            $query = $this->db->query("SELECT * FROM admin_menu_group where group_id = ? order by name;",array($id_grupo));                
+            $this->db->last_query();
+            return $query->result();                
         }
         
 }

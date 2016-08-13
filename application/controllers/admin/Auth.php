@@ -2,87 +2,54 @@
 
 class Auth extends CI_Controller {
 
-	function __construct()
-	{
-		parent::__construct();
-		$this->load->database();
-		$this->load->library(array('ion_auth','form_validation'));
-		$this->load->helper(array('url','language'));
-
-		$this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
-
-		$this->lang->load('auth');
-	}
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load->database();
+        $this->load->library(array('ion_auth','form_validation'));
+        $this->load->helper(array('url','language'));
+        $this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
+        $this->lang->load('auth');
+        $this->idmenu = $this->uri->segment(5);
+        if($this->ion_auth->user()->row()){
+            $this->listado= $this->ion_auth->menu_group($this->ion_auth->user()->row());
+        }
+    }
 
 	// redirect if needed, otherwise display the user list
-	function index()
-	{
+    public function index()
+    {
 
-		if (!$this->ion_auth->logged_in())
-		{
-			// redirect them to the login page
-			redirect('admin/auth/login', 'refresh');
-		}
-		else
-		{                      //Set the menu according with the type of user
-                    $this->smarty1->assign("listado",$this->ion_auth->menu_group($this->ion_auth->is_admin()));
-                    // set the flash data error message if there is one
-                    $this->smarty1->assign("message",(validation_errors()) ? validation_errors() : $this->session->flashdata('message'));
-                    //Set the title of the template
-		    $this->smarty1->assign("title","Bienvenidos");
-                    $this->smarty1->assign("class","fa fa-briefcase");
+        $this->ion_auth->validate_admin();
+        //Set the menu according with the type of user
+        $this->smarty1->assign("listado", $this->listado);
+        $this->smarty1->assign("message",(validation_errors()) ? validation_errors() : $this->session->flashdata('message'));
+        $this->smarty1->assign("title","Bienvenidos");
+        $this->smarty1->assign("idmenu", $this->idmenu);
 
-		    //Load the view
-                    $this->smarty1->view('admin/auth/index');
-		}
-	}
+        //Load the view
+        $this->smarty1->view('admin/auth/index');
 
-function users()
-	{
+    }
 
-		if (!$this->ion_auth->logged_in())
-		{
-			// redirect them to the login page
-			redirect('admin/auth/login', 'refresh');
-		}
-		elseif (!$this->ion_auth->is_admin()) // remove this elseif if you want to enable this for non-admins
-		{
-
-		     //Set the menu according with the type of user
-                    $this->smarty1->assign("listado",$this->ion_auth->menu_group($this->ion_auth->is_admin()));
-                    // set the flash data error message if there is one
-                    $this->smarty1->assign("message",(validation_errors()) ? validation_errors() : $this->session->flashdata('message'));
-                    //Load the view
-                    redirect('admin/auth', 'refresh');
-		}
-		else
-		{
-
-                    //Set the menu according with the type of user
-                    $this->smarty1->assign("listado",$this->ion_auth->menu_group($this->ion_auth->is_admin()));
-                    // set the flash data error message if there is one
-                    $this->smarty1->assign("message",(validation_errors()) ? validation_errors() : $this->session->flashdata('message'));
-
-
-                   // Se asignan todos los usuarios existentes
-
-                    $this->data['users']=$this->ion_auth->users()->result();
-
-                    //Se asignan a los usuarios los respectivos grupos a los que pertenecen
-
-                    foreach ($this->data['users'] as $k => $user)
-                    {
-                         $this->data['users'][$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
-                    }
-                    //Se asignan los usuarios a las variable $users
-                         $users=array_shift($this->data);
-                         $this->smarty1->assign("users", $users);
-			 $this->smarty1->assign("title",lang('index_heading'));
-			 $this->smarty1->assign("class","fa fa-users");
-                    //Se carga el Template Users
-                         $this->smarty1->view('admin/auth/users');
-		}
-	}
+    public function users()
+    {
+        $this->ion_auth->validate_admin();
+        //Se asignan a los usuarios los respectivos grupos a los que pertenecen
+        $this->data['users']=$this->ion_auth->users()->result();
+        foreach ($this->data['users'] as $k => $user)
+        {
+             $this->data['users'][$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
+        }
+        //Se asignan los usuarios a las variable $users
+        $users=array_shift($this->data);
+        $this->smarty1->assign("listado", $this->listado);
+        $this->smarty1->assign("users", $users);
+        $this->smarty1->assign("title",lang('index_heading'));
+        $this->smarty1->assign("idmenu", $this->idmenu);
+   //Se carga el Template Users
+        $this->smarty1->view('admin/auth/users');
+    }
 
 	// log the user in
 	function login()
@@ -484,7 +451,7 @@ function users()
 		}
 
                 //Set the menu according with the type of user
-                $this->data['listado'] = $this->ion_auth->menu_group($this->ion_auth->is_admin());
+                $this->data['listado'] = $this->listado;
 
 		$id = (int) $id;
 
@@ -539,16 +506,13 @@ function users()
 	}
 
 	// create a new user
-	function create_user()
+    public function create_user()
     {
         $this->data['title'] = "Create User";
 
-        if (!$this->ion_auth->logged_in() || !$this->ion_auth->is_admin())
-        {
-            redirect('admin/auth/users', 'refresh');
-        }
+        $this->ion_auth->validate_admin();
         //Set the menu according with the type of user
-        $this->data['listado'] = $this->ion_auth->menu_group($this->ion_auth->is_admin());
+        $this->data['listado'] = $this->listado;
 
         $tables = $this->config->item('tables','ion_auth');
         $identity_column = $this->config->item('identity','ion_auth');
@@ -589,7 +553,7 @@ function users()
             // check to see if we are creating the user
             // redirect them back to the admin page
             $this->session->set_flashdata('message', $this->ion_auth->messages());
-            redirect("admin/auth", 'refresh');
+            redirect("admin/auth/index/".$this->idmenu, 'refresh');
         }
         else
         {
@@ -679,7 +643,7 @@ function users()
 	    $this->smarty1->assign("password_confirm",$this->data['password_confirm']);
 	    $this->smarty1->assign("button",$this->data['button']);
 	    $this->smarty1->assign("title",lang('create_user_heading'));
-	    $this->smarty1->assign("class","fa fa-users");
+	    $this->smarty1->assign("idmenu", $this->idmenu);
 
 	    //$this->_render_page('auth/create_user', $this->data);
 	    $this->smarty1->view('admin/auth/create_user');
@@ -690,16 +654,14 @@ function users()
 	// edit a user
 	function edit_user($id)
 	{
-		$this->data['title'] = "Edit User";
+		
 
 		//if (!$this->ion_auth->logged_in() || (!$this->ion_auth->is_admin() && !($this->ion_auth->user()->row()->id == $id)))
 
-		 if (!$this->ion_auth->logged_in() || !$this->ion_auth->is_admin())
-		{
-			redirect('admin/auth/users', 'refresh');
-		}
+		$this->ion_auth->validate_admin();
+                $this->data['title'] = "Edit User";
                 //Set the menu according with the type of user
-                $this->data['listado'] = $this->ion_auth->menu_group($this->ion_auth->is_admin());
+                $this->data['listado'] = $this->listado;
 
 		$user = $this->ion_auth->user($id)->row();
 		$groups=$this->ion_auth->groups()->result_array();
@@ -767,7 +729,7 @@ function users()
 				    $this->session->set_flashdata('message', $this->ion_auth->messages() );
 				    if ($this->ion_auth->is_admin())
 					{
-						redirect('admin/auth/users', 'refresh');
+						redirect('admin/auth/users/'.$this->idmenu, 'refresh');
 					}
 					else
 					{
@@ -781,7 +743,7 @@ function users()
 				    $this->session->set_flashdata('message', $this->ion_auth->errors() );
 				    if ($this->ion_auth->is_admin())
 					{
-						redirect('admin/auth/users', 'refresh');
+						redirect('admin/auth/users/'.$this->idmenu, 'refresh');
 					}
 					else
 					{
@@ -859,7 +821,7 @@ function users()
 	    	);
 
 	     $this->smarty1->assign("admin",$this->ion_auth->is_admin());
-	    $this->smarty1->assign("listado",$this->data['listado']);
+	    $this->smarty1->assign("listado",$this->listado);
 	    $this->smarty1->assign("csrf",$this->data['csrf']);
 	    $this->smarty1->assign("message",$this->data['message']);
 	    $this->smarty1->assign("user",$this->data['user']);
@@ -873,100 +835,87 @@ function users()
 	    $this->smarty1->assign("password_confirm",$this->data['password_confirm']);
 	    $this->smarty1->assign("button",$this->data['button']);
 	    $this->smarty1->assign("title",lang('edit_user_heading'));
-	    $this->smarty1->assign("class","fa fa-users");
+	    $this->smarty1->assign("idmenu", $this->idmenu);
 
 	    //$this->_render_page('auth/edit_user', $this->data);
-	        $this->smarty1->view('admin/auth/edit_user');
+	    $this->smarty1->view('admin/auth/edit_user');
 	}
 
 	// create a new group
 	function create_group()
 	{
-		$this->data['title'] = $this->lang->line('create_group_title');
+		
 
-		if (!$this->ion_auth->logged_in() || !$this->ion_auth->is_admin())
-		{
-			redirect('admin/auth', 'refresh');
-		}
-                //Set the menu according with the type of user
-                $this->data['listado'] = $this->ion_auth->menu_group($this->ion_auth->is_admin());
+            $this->ion_auth->validate_admin();
 
-		// validate form input
-		$this->form_validation->set_rules('group_name', $this->lang->line('create_group_validation_name_label'), 'required|alpha_dash');
+            $this->data['title'] = $this->lang->line('create_group_title');
+            //Set the menu according with the type of user
+            //$this->data['listado'] = $this->ion_auth->menu_group($this->ion_auth->is_admin());
 
-		if ($this->form_validation->run() == TRUE)
-		{
-			$new_group_id = $this->ion_auth->create_group($this->input->post('group_name'), $this->input->post('description'));
-			if($new_group_id)
-			{
-				// check to see if we are creating the group
-				// redirect them back to the admin page
-				$this->session->set_flashdata('message', $this->ion_auth->messages());
-				redirect("admin/auth/users", 'refresh');
-			}
-		}
-		else
-		{
-			// display the create group form
-			// set the flash data error message if there is one
-			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+            // validate form input
+            $this->form_validation->set_rules('group_name', $this->lang->line('create_group_validation_name_label'), 'required|alpha_dash');
 
-			$this->data['group_name'] = array(
-				'name'  => 'group_name',
-				'id'    => 'group_name',
-                                'class' => 'form-control',
-                                'placeholder' => 'Nombre del Grupo',
-            			'type'  => 'text',
-				'value' => $this->form_validation->set_value('group_name'),
-			);
-			$this->data['description'] = array(
-				'name'  => 'description',
-		 		'id'    => 'description',
-                                'class' => 'form-control',
-                                'placeholder' => 'Descripción',
-				'type'  => 'text',
-				'value' => $this->form_validation->set_value('description'),
-			);
-			$this->data['button'] = array(
-			'class' => 'btn btn-success',
-			'name' => 'enviar',
-			'value' => 'Enviar'
-			);
-		       $this->smarty1->assign("listado",$this->data['listado']);
-		       $this->smarty1->assign("message",$this->data['message']);
-		       $this->smarty1->assign("group_name",$this->data['group_name']);
-		       $this->smarty1->assign("description",$this->data['description']);
-		       $this->smarty1->assign("button",$this->data['button']);
-		       $this->smarty1->assign("title",lang('create_group_heading'));
-		       $this->smarty1->assign("class","fa fa-users");
+            if ($this->form_validation->run() == TRUE)
+            {
+                    $new_group_id = $this->ion_auth->create_group($this->input->post('group_name'), $this->input->post('description'));
+                    if($new_group_id)
+                    {
+                            // check to see if we are creating the group
+                            // redirect them back to the admin page
+                            $this->session->set_flashdata('message', $this->ion_auth->messages());
+                            redirect("admin/auth/users", 'refresh');
+                    }
+            }
+            else
+            {
+                // display the create group form
+                // set the flash data error message if there is one
+                $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
 
-		       //$this->_render_page('auth/create_group', $this->data);
-		       $this->smarty1->view('admin/auth/create_group');
+                $this->data['group_name'] = array(
+                        'name'  => 'group_name',
+                        'id'    => 'group_name',
+                        'class' => 'form-control',
+                        'placeholder' => 'Nombre del Grupo',
+                        'type'  => 'text',
+                        'value' => $this->form_validation->set_value('group_name'),
+                );
+                $this->data['description'] = array(
+                        'name'  => 'description',
+                        'id'    => 'description',
+                        'class' => 'form-control',
+                        'placeholder' => 'Descripción',
+                        'type'  => 'text',
+                        'value' => $this->form_validation->set_value('description'),
+                );
+                $this->data['button'] = array(
+                'class' => 'btn btn-success',
+                'name' => 'enviar',
+                'value' => 'Enviar'
+                );
+               $this->smarty1->assign("listado",$this->listado);
+               $this->smarty1->assign("message",$this->data['message']);
+               $this->smarty1->assign("group_name",$this->data['group_name']);
+               $this->smarty1->assign("description",$this->data['description']);
+               $this->smarty1->assign("button",$this->data['button']);
+               $this->smarty1->assign("title",lang('create_group_heading'));
+               $this->smarty1->assign("idmenu", $this->idmenu);
+
+               //$this->_render_page('auth/create_group', $this->data);
+               $this->smarty1->view('admin/auth/create_group');
 
 
-		}
+            }
 	}
 
 	// edit a group
 	function edit_group($id)
 	{
 		// bail if no group id given
-		if(!$id || empty($id))
-		{
-			redirect('admin/auth', 'refresh');
-		}
+		$this->ion_auth->validate_admin();
                 //Set the menu according with the type of user
-                $this->data['listado'] = $this->ion_auth->menu_group($this->ion_auth->is_admin());
-
 		$this->data['title'] = $this->lang->line('edit_group_title');
-
-		if (!$this->ion_auth->logged_in() || !$this->ion_auth->is_admin())
-		{
-			redirect('admin/auth', 'refresh');
-		}
-
 		$group = $this->ion_auth->group($id)->row();
-
 		// validate form input
 		$this->form_validation->set_rules('group_name', $this->lang->line('edit_group_validation_name_label'), 'required|alpha_dash');
 
@@ -1019,13 +968,13 @@ function users()
 			'value' => 'Enviar'
 		);
 
-		$this->smarty1->assign("listado",$this->data['listado']);
+		$this->smarty1->assign("listado",$this->listado);
 		$this->smarty1->assign("message",$this->data['message']);
 		$this->smarty1->assign("group_name",$this->data['group_name']);
 		$this->smarty1->assign("group_description",$this->data['group_description']);
 		$this->smarty1->assign("button",$this->data['button']);
 		$this->smarty1->assign("title",lang('edit_group_heading'));
-		$this->smarty1->assign("class","fa fa-users");
+		$this->smarty1->assign("idmenu", $this->idmenu);
 
 		//$this->_render_page('auth/edit_group', $this->data);
 		$this->smarty1->view('admin/auth/edit_group');

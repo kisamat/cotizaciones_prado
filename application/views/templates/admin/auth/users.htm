@@ -19,22 +19,22 @@
            
 		<td>
                             {#foreach from=$user->groups item=$group#}
-                              <a href="{#base_url()#}admin/auth/edit_group/{#$group->id#}">{#$group->name#} </a> <br />                                        
+                              <a href="{#base_url()#}admin/auth/edit_group/{#$group->id#}/{#$idmenu#}">{#$group->name#} </a> <br />                                        
                             {#/foreach#}
                 </td>
                 <td>{#if $user->active#}                         
-                            <a href="{#base_url()#}admin/auth/deactivate/{#$user->id#}" class="btn btn-success">{#lang('index_active_link')#} </a> <br />     
+                            <a href="{#base_url()#}admin/auth/deactivate/{#$user->id#}/{#$idmenu#}" class="btn btn-success">{#lang('index_active_link')#} </a> <br />     
                         {#else#}
-                            <a href="{#base_url()#}admin/auth/activate/{#$user->id#}" class="btn btn-danger">{#lang('index_inactive_link')#} </a> <br />                                 
+                            <a href="{#base_url()#}admin/auth/activate/{#$user->id#}/{#$idmenu#}" class="btn btn-danger">{#lang('index_inactive_link')#} </a> <br />                                 
                         {#/if#}
                  <td>
-                        <a href="{#base_url()#}admin/auth/edit_user/{#$user->id#}" class="btn btn-warning">Edit</a> <br />                                 
+                        <a href="{#base_url()#}admin/auth/edit_user/{#$user->id#}/{#$idmenu#}" class="btn btn-warning">Edit</a> <br />                                 
                         
                     </td>
 		</tr>
 	{#/foreach#}
 </table>
 
-<p><a href="{#base_url()#}admin/auth/create_user" class="btn btn-info">{#lang('index_create_user_link')#}</a> | <a href="{#base_url()#}admin/auth/create_group" class="btn btn-primary">{#lang('index_create_group_link')#}</a></p>
+<p><a href="{#base_url()#}admin/auth/create_user/{#$idmenu#}" class="btn btn-info">{#lang('index_create_user_link')#}</a> | <a href="{#base_url()#}admin/auth/create_group/{#$idmenu#}" class="btn btn-primary">{#lang('index_create_group_link')#}</a></p>
 
            {#include file="admin/tema/footer.htm"#}

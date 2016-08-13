@@ -1,17 +1,17 @@
 <?php
-/* Smarty version 3.1.29, created on 2016-08-10 18:08:37
+/* Smarty version 3.1.29, created on 2016-08-11 18:13:42
   from "/www/cotizaciones_prado/application/views/templates/admin/tema/menul.htm" */
 
 if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl, array (
   'has_nocache_code' => false,
   'version' => '3.1.29',
-  'unifunc' => 'content_57abb3f58ddd31_22611421',
+  'unifunc' => 'content_57ad06a66e5b09_40971571',
   'file_dependency' => 
   array (
     '6d5b062a0a1d91d621692545cb94025a9b832eea' => 
     array (
       0 => '/www/cotizaciones_prado/application/views/templates/admin/tema/menul.htm',
-      1 => 1468361213,
+      1 => 1470957088,
       2 => 'file',
     ),
   ),
@@ -19,7 +19,7 @@ if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl,
   array (
   ),
 ),false)) {
-function content_57abb3f58ddd31_22611421 ($_smarty_tpl) {
+function content_57ad06a66e5b09_40971571 ($_smarty_tpl) {
 ?>
 <div class="collapse navbar-collapse navbar-ex1-collapse">
     <ul class="nav navbar-nav side-nav">
@@ -47,6 +47,7 @@ $__foreach_menu_0_saved_local_item = $_smarty_tpl->tpl_vars['menu'];
             <li>
                 <a href="<?php echo base_url();?>
 admin/<?php echo $_smarty_tpl->tpl_vars['menu']->value->link;?>
+/index/<?php echo $_smarty_tpl->tpl_vars['menu']->value->menu_id;?>
 "><i class="<?php echo $_smarty_tpl->tpl_vars['menu']->value->class;?>
 "></i> <?php echo $_smarty_tpl->tpl_vars['menu']->value->name;?>
 </a>
@@ -58,7 +59,7 @@ admin/<?php echo $_smarty_tpl->tpl_vars['menu']->value->link;?>
 "></i> <?php echo $_smarty_tpl->tpl_vars['menu']->value->name;?>
  <i class="fa fa-fw fa-caret-down"></i></a>
                 <ul id="demo<?php echo $_smarty_tpl->tpl_vars['menu']->value->menu_id;?>
-" class="collapse">
+" <?php if (isset($_smarty_tpl->tpl_vars['idmenu']->value) && ($_smarty_tpl->tpl_vars['idmenu']->value == $_smarty_tpl->tpl_vars['menu']->value->menu_id)) {?>class=""<?php } else { ?>class="collapse"<?php }?>>
                     <?php
 $_from = $_smarty_tpl->tpl_vars['listado']->value;
 if (!is_array($_from) && !is_object($_from)) {
@@ -75,6 +76,7 @@ $__foreach_lista_1_saved_local_item = $_smarty_tpl->tpl_vars['lista'];
                         <li>
                             <a href="<?php echo base_url();?>
 admin/<?php echo $_smarty_tpl->tpl_vars['lista']->value->link;?>
+/index/<?php echo $_smarty_tpl->tpl_vars['menu']->value->menu_id;?>
 "><i class="<?php echo $_smarty_tpl->tpl_vars['lista']->value->class;?>
 "></i> <?php echo $_smarty_tpl->tpl_vars['lista']->value->name;?>
 </a>

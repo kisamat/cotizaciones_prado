@@ -1,17 +1,17 @@
 <?php
-/* Smarty version 3.1.29, created on 2016-08-10 18:08:37
+/* Smarty version 3.1.29, created on 2016-08-11 08:01:18
   from "/www/cotizaciones_prado/application/views/templates/admin/tema/header.htm" */
 
 if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl, array (
   'has_nocache_code' => false,
   'version' => '3.1.29',
-  'unifunc' => 'content_57abb3f58bc511_92101303',
+  'unifunc' => 'content_57ac771eedf277_88035247',
   'file_dependency' => 
   array (
     '376decbb2c0989f6a19fd134dcb0a1d6de8d5a55' => 
     array (
       0 => '/www/cotizaciones_prado/application/views/templates/admin/tema/header.htm',
-      1 => 1465954716,
+      1 => 1470920477,
       2 => 'file',
     ),
   ),
@@ -22,7 +22,7 @@ if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl,
     'file:admin/tema/miga.htm' => 1,
   ),
 ),false)) {
-function content_57abb3f58bc511_92101303 ($_smarty_tpl) {
+function content_57ac771eedf277_88035247 ($_smarty_tpl) {
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -43,8 +43,6 @@ assets/admin/images/favicon.gif" type="image/jpg"/>
     <link href="<?php echo base_url();?>
 assets/admin/css/bootstrap-datetimepicker.css" rel="stylesheet" />	
 
-    <link href="<?php echo base_url();?>
-assets/admin/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="<?php echo base_url();?>
 assets/admin/css/bootstrap.css" rel="stylesheet" type="text/css">
     <!-- Custom CSS -->
@@ -72,10 +70,10 @@ assets/admin/js/bootstrap-datetimepicker.min.js"><?php echo '</script'; ?>
  src="<?php echo base_url();?>
 libs/ckeditor/ckeditor.js"><?php echo '</script'; ?>
 >
-	<?php echo '<script'; ?>
+	<!--<?php echo '<script'; ?>
  src="<?php echo base_url();?>
 libs/ckfinder/ckfinder.js"><?php echo '</script'; ?>
->
+>-->
 
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

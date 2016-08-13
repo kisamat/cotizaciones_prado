@@ -1,0 +1,20 @@
+{#include file="admin/tema/header.htm"#}
+
+{#form_open("")#}
+
+      <p>
+            {#form_label('Nombre del salon','nombre')#} <br />
+            {#form_input($nombre)#}<div id="error">{#form_error('nombre')#}</div><br>
+      </p>
+      <p>
+          {#form_label('Descripción del salon','descripcion')#} <br />
+          {#form_textarea($descripcion)#}<div id="error">{#form_error('descripcion')#}</div><br>
+      </p>
+
+      
+
+      <p>{#form_submit($button)#}</p>
+
+{#form_close()#}
+
+{#include file="admin/tema/footer.htm"#}

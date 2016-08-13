@@ -1,4 +1,4 @@
-<div id="myModal" class="modal fade" aria-labelledby="myModalLabel" aria-hidden="true" tabindex="-1" role="dialog">
+<div id="myModalDel" class="modal fade" aria-labelledby="myModalLabel" aria-hidden="true" tabindex="-1" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
           
@@ -9,14 +9,12 @@
             
             <div class="modal-body" id="myModalBody">
                 
-                {#if empty($smarty.session.message)#}
-                <div id="alert-msg"></div>
-                {#else#}                
-                <div id="alert-msg">{#$smarty.session.message#}</div>
-                {#/if#}
+                <div id="alert-msg">¿Desea eliminr este item?</div>
+
             </div>
             <div class="modal-footer">
-                <input class="btn btn-default" id="delConfirmBtn" type="button" data-dismiss="modal" value="Close" />
+                <input class="btn btn-default" type="button" data-dismiss="modal" value="Cancelar" />
+                <a href="#" id="delConfirmBtn" class="btn btn-danger"><i class="icon-trash"></i> Delete</a>
             </div>
 
         </div>

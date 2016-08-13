@@ -13,6 +13,7 @@ class Espacios extends CI_Controller {
         $this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
         $this->load->model('admin/Espacios_model');
         $this->lang->load('auth');
+        $this->idmenu = $this->uri->segment(4);
     }
 
     // redirect if needed, otherwise display the user list
@@ -43,6 +44,7 @@ class Espacios extends CI_Controller {
             $this->smarty1->assign("hijos", $this->Espacios_model->get_hijos());
             $this->smarty1->assign("title", 'Espacios');
             $this->smarty1->assign("class", "fa fa-fw fa-sitemap");
+            $this->smarty1->assign("idmenu", $this->idmenu);
             //Se carga el Template Users
             $this->smarty1->view('admin/espacios/espacios');
         }
@@ -110,6 +112,7 @@ class Espacios extends CI_Controller {
             $this->smarty1->assign("padres", $padres);
             $this->smarty1->assign("title", 'Crear Espacio');
             $this->smarty1->assign("class", "fa fa-fw fa-sitemap");
+            $this->smarty1->assign("idmenu", $this->idmenu);
             $this->smarty1->view('admin/espacios/crear_espacio');
         }
     }
