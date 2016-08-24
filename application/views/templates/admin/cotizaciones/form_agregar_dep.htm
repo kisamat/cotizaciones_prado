@@ -1,0 +1,162 @@
+{#include file="admin/tema/header.htm"#}
+<script type="text/javascript">
+    
+function select_all() {
+    
+    $('input[class=case]:checkbox').each(function(){ 
+            if($('input[class=check_all]:checkbox:checked').length == 0){ 
+                    $(this).prop("checked", false); 
+            } else {
+                    $(this).prop("checked", true); 
+            } 
+    });
+}
+
+function check(){
+	obj=$('table tr').find('b');
+	$.each( obj, function( key, value ) {
+		id=value.id;
+		$('#'+id).html(key+1);
+	});
+}
+
+$(function () {
+    $(".delete").on('click', function() {
+    $('.case:checkbox:checked').parents("tr").remove();
+    $('.check_all').prop("checked", false); 
+        check();
+        });
+    var i=$('table tr').length;
+
+    $(".addmore").on('click',function(){
+            count=$('table tr').length;
+
+        var data="<tr><td><input type='checkbox' id='case_"+i+"' value='"+i+"' class='case'/></td>";
+            data+="<td><b id='snum"+i+"'>"+count+".</b> <input type='hidden' data-type='countryid' id='iddependencia_"+i+"' name='countryid[]'/></td>";
+            data+="<td><input class='form-control autocomplete_txt' type='text' data-type='countryname' id='nombredep_"+i+"' name='countryname[]'/></td>";
+            data+="<td><input class='form-control autocomplete_txt' type='text' data-type='country_no' id='country_no_"+i+"' name='country_no[]'/></td></tr>";
+            
+            $('table').append(data);
+            row = i ;
+            i++;
+    });
+    
+    //autocomplete script
+    $(document).on('focus','.autocomplete_txt',function(){
+        type = $(this).data('type');
+
+        if(type =='countryname' )autoTypeNo=0;
+        
+
+        $(this).autocomplete({
+        minLength: 0,
+        source: function( request, response ) {
+            $.ajax({
+                url : '{#$linkObtenerItem#}',
+                dataType: "json",
+                type : 'post',
+                data: {
+                   name_startsWith: request.term,
+                   type: 'country_table',
+                   row_num : 1
+                },
+                 success: function( data ) {
+                         response( $.map( data, function( item ) {
+                                var code = item.split("|");
+                                return {
+                                        label: code[0],
+                                        value: code[0],
+                                        data : item
+                                }
+                        }));
+                }
+            });
+        },
+        focus: function() {
+            // prevent value inserted on focus
+            return false;
+        },
+        select: function( event, ui ) {
+            var names = ui.item.data.split("|");						
+            id_arr = $(this).attr('id');
+            id = id_arr.split("_");
+            elementId = id[id.length-1];
+            $('#nombredep_'+elementId).val(names[0]);
+            $('#iddependencia_'+elementId).val(names[1]);
+
+            //$('#country_code_'+elementId).val();
+        }
+        });
+    });
+      
+        
+});    
+
+</script>
+{#form_open("")#}
+<div class="row">
+    <div class='col-md-6'>
+        <p><b>Cotización No: </b>{#$datosc->id_cotizacion#}</p>
+        <p><b>Fecha del evento No: </b>{#$datosc->fechai#} {#$datosc->horai#} A  {#$datosc->fechaf#} {#$datosc->horaf#}</p>
+    </div>
+    <div class='col-md-6'>
+        <p><b>Cliente: </b>{#$datoscli->nombres#} {#$datoscli->apellidos#}</p>
+        <p><b>NIT/Documento: </b>{#$datoscli->documento#}</p>
+    </div>    
+</div>
+<button type="button" class="btn btn-danger delete">- Borrar</button>
+<button type="button" class="btn btn-success addmore">+ Agregar otra Dependencia</button>
+
+<br><br>
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <tbody>
+            <tr>
+                <th>
+                    
+                </th>
+            </tr>
+            <tr>
+                <th><input class="check_all" onclick="select_all()" type="checkbox"></th>
+                <th>No</th>
+                <th>Nombre Dependencia</th>
+                <th>Observación</th>
+               
+            </tr>
+            {#if !empty($datitems)#}
+            {#foreach $datitems as $dato#}
+            <tr>
+                <td><input class="case" id="case_{#$dato@iteration#}" value="{#$dato@iteration#}" type="checkbox"></td>
+                <td><b id="snum">{#$dato@iteration#}.</b><input type='hidden' value="{#$dato->id_dependencia#}" data-type='countryid' id='iddependencia_{#$dato@iteration#}' name='countryid[]' ></td>
+                <td><input class="form-control autocomplete_txt" value="{#$dato->nombre#}" data-type="countryname" id="nombredep_{#$dato@iteration#}" name="countryname[]" type="text"></td>
+                <td><input class="form-control autocomplete_txt" value="{#$dato->observacion#}" data-type="country_no" id="country_no_{#$dato@iteration#}" name="country_no[]" type="text"></td>
+                
+            </tr>
+            {#/foreach#}
+            {#else#}
+            <tr>
+                <td><input class="case" id="case_1" value="1" type="checkbox"></td>
+                <td><b id="snum">1.</b><input type='hidden' data-type='countryid' id='iddependencia_1' name='countryid[]'/></td>
+                <td><input class="form-control autocomplete_txt" data-type="countryname" id="nombredep_1" name="countryname[]" type="text"></td>
+                <td><input class="form-control autocomplete_txt" data-type="country_no" id="country_no_1" name="country_no[]" type="text"></td>
+              
+            </tr>
+            {#/if#}
+            
+        </tbody>
+        
+    </table>
+     
+</div>       
+<div class='col-md-12 right'>
+        <div class="form-group">
+            {#form_submit($button)#}
+        </div>
+    </div>        
+</div>
+    
+{#form_close()#}
+
+
+{#include file="admin/tema/footer.htm"#}
+

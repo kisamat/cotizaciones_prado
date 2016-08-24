@@ -1,0 +1,112 @@
+{#include file="admin/tema/header.htm"#}
+
+<script>
+    $(function () {
+      $('.remove-item').click(function () {
+        $("#delConfirmBtn").attr("href", $(this).attr("href"));
+        $('#myModalDel').modal('show');
+        return false;
+      });
+    });
+</script>
+  
+    
+<h2>Busqueda </h2>
+
+{#form_open("")#}
+
+<div class='col-md-12'>
+    <div class="row">    
+    <div class='col-md-5'>
+    <span>
+        {#form_label('Nombres del Cliente','nombres')#} <br />
+        {#form_input($nombres)#}<div id="error">{#form_error('nombres')#}</div><br>
+    </span>
+    </div>
+    
+        <div class='col-md-3'>
+            <div class="form-group">
+                {#form_label('Escoja la Fecha Inicial','fechai')#}
+                <div class='input-group date' id='datetimepicker6'>                
+                    {#form_input($fechai)#}
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>                
+                </div>
+                <div id="error">{#form_error('fechai')#}</div><br>
+            </div>
+        </div>
+
+        <div class='col-md-3'>
+            <div class="form-group">
+                {#form_label('Escoja la Fecha Final','fechaf')#}
+                <div class='input-group date' id='datetimepicker7'>
+                    {#form_input($fechaf)#} 
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+                <div id="error">{#form_error('fechaf')#}</div><br>
+            </div>
+        </div>
+        <div class='col-md-1' style="padding-top: 25px;" ><span>{#form_submit($button)#}</span></div><br>
+
+    </div>  
+    
+</div> 
+
+
+
+{#form_close()#}
+<table class="table table-bordered" cellpadding=0 cellspacing=10>
+	<tr>
+		<th> Nombre Cliente</th>
+                <th> Fecha Creación</th>
+                <th class="tit-opcion-admin" > <a href="{#base_url()#}admin/cotizaciones/crear/{#$idmenu#}" class="btn btn-info nuevo-item">Crear nuevo item</a></th>
+
+	</tr>
+	{#foreach from=$data item=$categoria#}
+        <tr>
+            <td>{#$categoria->nombres#} {#$categoria->apellidos#}</td>
+            <td>{#$categoria->fechai|date_format:"%A, %B %e, %Y"#}</td>
+            <td >
+                <a href="{#base_url()#}admin/cotizaciones/verCotizacion/{#$categoria->id_cotizacion#}" class="btn" target="_blank"><i class="fa fa-eye opcion" title="Ver cotización" style="font-size:36px;"></i></a>
+                <a href="{#base_url()#}admin/cotizaciones/editar/{#$idmenu#}/{#$categoria->id_cotizacion#}" class="btn "><i class="fa fa-edit opcion" title="Editar cotización" style="font-size:36px;"></i></a>
+                <a href="{#base_url()#}admin/cotizaciones/estado/{#$idmenu#}/{#$categoria->id_cotizacion#}" class="btn"><i class="fa fa-cog" title="Cambiar estado" style="font-size:36px;"></i></a>
+                <a href="{#base_url()#}admin/cotizaciones/envio/{#$idmenu#}/{#$categoria->id_cotizacion#}" class="btn"><i class="fa fa-send" title="Enviar cotización correo eléctronico" style="font-size:36px;"></i></a>
+                {#if $categoria->id_estado==2#}
+                <a href="{#base_url()#}admin/cotizaciones/cotdep/{#$idmenu#}/{#$categoria->id_cotizacion#}" class="btn"><i class="fa fa-group" title="Agregar dependencias a la cotización" style="font-size:36px;"></i></a>
+                <a href="{#base_url()#}userfiles/cotizacion/cotizacion_interna{#$categoria->id_cotizacion#}.pdf" class="btn" target="_blank" ><i class="fa fa-file-pdf-o" title="Ver pdf interno" style="font-size:36px;"></i></a>
+                {#/if#}
+                <a href="{#base_url()#}admin/cotizaciones/log/{#$idmenu#}/{#$categoria->id_cotizacion#}" class="btn"><i class="fa fa-binoculars" title="Ver log de eventos cotización" style="font-size:36px;"></i></a>
+            </td>
+
+		</tr>
+	{#/foreach#}
+</table>
+
+
+{#include file="admin/tema/modal_delitem.htm"#}
+{#include file="admin/tema/footer.htm"#}
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker6').datetimepicker({
+            locale: 'es',
+            format: 'YYYY-MM-DD',
+        });
+
+        $('#datetimepicker7').datetimepicker({
+            useCurrent: false, //Important! See issue #1075
+            locale: 'es',
+            format: 'YYYY-MM-DD',
+        });
+
+        $("#datetimepicker6").on("dp.change", function (e) {
+            $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
+        });
+        $("#datetimepicker7").on("dp.change", function (e) {
+            $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
+        });
+        
+    });
+</script>

@@ -1,0 +1,31 @@
+{#include file="admin/tema/header.htm"#}
+
+{#form_open("")#}
+
+<p>
+    {#form_label('Nombre de la Dependencia','nombre')#} <br />
+    {#form_input($nombre)#}<div id="error">{#form_error('nombre')#}</div><br>
+</p>
+<p>
+    {#form_label('Jefe de la Dependencia','jefe')#} <br />
+    {#form_input($jefe)#}<div id="error">{#form_error('jefe')#}</div><br>
+</p>
+
+<p>
+    {#form_label('Correo de la Dependencia','correo')#} <br />
+    {#form_input($correo)#}<div id="error">{#form_error('correo')#}</div><br>
+</p>
+<p>
+    {#form_label('Descripción de la Dependencia','descripcion')#} <br />
+    {#form_textarea($descripcion)#}<div id="error">{#form_error('descripcion')#}</div><br>
+</p>
+
+
+
+
+
+<p>{#form_submit($button)#}</p>
+
+{#form_close()#}
+
+{#include file="admin/tema/footer.htm"#}

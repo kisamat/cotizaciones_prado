@@ -1,0 +1,48 @@
+{#include file="admin/tema/header.htm"#}
+
+{#form_open("")#}
+
+<div class="row">
+    <div class='col-md-12'>
+        <p>Salon: <b>{#$nomsal->nombre#}</b></p>
+    </div>
+    
+    <div class='col-md-6'>
+        <p><b>Cotización No: </b>{#$datosc->id_cotizacion#}</p>
+        <p><b>Fecha del evento No: </b>{#$datosc->fechai#} {#$datosc->horai#} A  {#$datosc->fechaf#} {#$datosc->horaf#}</p>
+    </div>
+    <div class='col-md-6'>
+        <p><b>Cliente: </b>{#$datoscli->nombres#} {#$datoscli->apellidos#}</p>
+        <p><b>NIT/Documento: </b>{#$datoscli->documento#}</p>
+        <p><b>Correo eléctronico: </b>{#$datoscli->email#}</p>
+    </div>    
+</div>
+<div class="row">
+    <div class='col-md-12'>
+        {#form_label('Correo electronico secundario')#}
+        <div class="form-group">
+        {#form_input($email)#}
+        </div>
+        <div id="error">{#form_error('email')#}</div>
+    </div>
+    <div class='col-md-12'>
+        {#form_label('Cuerpo del correo')#}
+        <div class="form-group">
+        {#form_textarea($descripcion)#}
+        </div>
+        <div id="error">{#form_error('descripcion')#}</div>
+    </div>        
+</div>       
+<div class="row">
+<div class='col-md-12 right'>
+        <div class="form-group">
+            {#form_submit($button)#}
+        </div>
+    </div>        
+</div>
+    
+{#form_close()#}
+
+
+{#include file="admin/tema/footer.htm"#}
+

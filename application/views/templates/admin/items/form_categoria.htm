@@ -1,0 +1,27 @@
+{#include file="admin/tema/header.htm"#}
+
+{#form_open("")#}
+<div class="row">
+    <div class='col-md-12'>
+        <div class="form-group">
+            {#form_label('Nombre del item','nombre')#} <br />
+            {#form_input($nombre)#}
+            <div id="error">{#form_error('nombre')#}</div>
+        </div>
+    </div>
+    <div class='col-md-12'>
+        <div class="form-group">
+            {#form_label('Valor del item','valor')#} <br />
+            {#form_input($valor)#}
+            <div id="error">{#form_error('valor')#}</div>
+        </div>
+    </div>
+    <div class='col-md-4 center'>
+        <div class="form-group">
+            {#form_submit($button)#}
+        </div>
+    </div>
+</div>
+{#form_close()#}
+
+{#include file="admin/tema/footer.htm"#}

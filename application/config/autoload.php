@@ -58,7 +58,7 @@ $autoload['packages'] = array();
 |
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
-$autoload['libraries'] = array('Smarty1', 'form_validation');
+$autoload['libraries'] = array('Smarty1', 'form_validation','My_PHPMailer', 'M_pdf');
 
 /*
 | -------------------------------------------------------------------

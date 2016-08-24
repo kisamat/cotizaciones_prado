@@ -1,0 +1,295 @@
+{#include file="admin/tema/header.htm"#}
+<script type="text/javascript">
+    var ipc={#$datosc->val_ipc|default:0#};
+    var iva={#$datosc->val_ival|default:0#};
+    var subtot= {#$datosc->val_subtotal|default:0#};
+    var totn= {#$datosc->val_total|default:0#};
+function select_all() {
+    
+    $('input[class=case]:checkbox').each(function(){ 
+            if($('input[class=check_all]:checkbox:checked').length == 0){ 
+                    $(this).prop("checked", false); 
+            } else {
+                    $(this).prop("checked", true); 
+            } 
+    });
+}
+
+function check(){
+	obj=$('table tr').find('b');
+	$.each( obj, function( key, value ) {
+		id=value.id;
+		$('#'+id).html(key+1);
+	});
+}
+function calcal(id){
+    //alert(id);
+    var tipoimp=$('#phone_code_'+id).val();
+    
+    var cant=$('#country_cantidad_'+id).val();
+    //alert(cant);
+    var price=$('#country_no_'+id).val();
+    //alert(price);
+    var total=cant*price;
+    if(tipoimp>0.08){
+        iva=iva+(total*tipoimp);
+    }else{
+        ipc=ipc+(total*tipoimp);
+    }
+    subtot=subtot+total;
+    totn= subtot+ipc+iva;
+
+    //alert(total);
+    $('#country_value_'+id).val(total);
+    $('#stotal').val(subtot);
+    $('#tipc').val(ipc);
+    $('#tiva').val(iva);
+    $('#total').val(totn);
+}
+function restartot(id){
+
+    var tipoimp=$('#phone_code_'+id).val();
+
+    var cant=$('#country_cantidad_'+id).val();
+    //alert(cant);
+    var price=$('#country_no_'+id).val();
+    //alert(price);
+
+    var total=cant*price;
+    if(tipoimp>0.08){
+        iva=iva-(total*tipoimp);
+    }else{
+        ipc=ipc-(total*tipoimp);
+    }
+    subtot=subtot-total;
+    totn= subtot-ipc-iva;
+
+    //alert(total);
+    $('#country_value_'+id).val(total);
+    $('#stotal').val(subtot);
+    $('#tipc').val(ipc);
+    $('#tiva').val(iva);
+    $('#total').val(totn);
+    if($('.check_all').is(':checked')){
+        //alert($('.check_all:checkbox:checked'));
+        $('#stotal').val(0);
+        $('#tipc').val(0);
+        $('#tiva').val(0);
+        $('#total').val(0);
+    }
+    $('.case:checkbox:checked').parents("tr").remove();
+    $('.check_all').prop("checked", false); 
+    check();
+    
+    
+}
+$(function () {
+    $(".delete").on('click', function() {
+        restartot($('.case:checkbox:checked').val());
+    });
+    var i=$('table tr').length;
+
+    $(".addmore").on('click',function(){
+            count=$('table tr').length;
+
+        var data="<tr><td><input type='checkbox' id='case_"+i+"' value='"+i+"' class='case'/></td>";
+            data+="<td><b id='snum"+i+"'>"+count+".</b> <input type='hidden' data-type='countryid' id='countryid_"+i+"' name='countryid[]'/></td>";
+            data+="<td><input class='form-control autocomplete_txt' type='text' data-type='countryname' id='countryname_"+i+"' name='countryname[]'/></td>";
+            data+="<td><input class='form-control' readonly type='text' data-type='country_no' id='country_no_"+i+"' name='country_no[]'/></td>";
+            data+="<td><input class='form-control' readonly type='text' data-type='phone_code' id='phone_code_"+i+"'  name='phone_code[]'/></td>";
+            data+="<td><input class='form-control' type='text' data-type='country_code' id='country_cantidad_"+i+"' onchange='calcal("+i+")' name='country_cantidad[]'/></td>";
+            data+="<td><input class='form-control' readonly type='text' data-type='country_code' id='country_value_"+i+"' name='country_value[]'/></td></tr>";
+            $('table').append(data);
+            row = i ;
+            i++;
+    });
+    /*$('#countryname_1').autocomplete({
+            source: function( request, response ) {
+                    $.ajax({
+                            url : '{#$linkObtenerItem#}',
+                            dataType: "json",
+                            type : 'post',
+                            data: {
+                               name_startsWith: request.term,
+                               type: 'country_table',
+                               row_num : 1
+                            },
+                             success: function( data ) {
+                                     response( $.map( data, function( item ) {
+                                            var code = item.split("|");
+                                            return {
+                                                    label: code[0],
+                                                    value: code[0],
+                                                    data : item
+                                            }
+                                    }));
+                            }
+                    });
+            },
+            autoFocus: true,	      	
+            minLength: 0,
+            select: function( event, ui ) {
+                    var names = ui.item.data.split("|");						
+                    $('#country_no_1').val(names[1]);
+                    $('#phone_code_1').val(names[2]);
+                    $('#country_code_1').val(names[3]);
+            }		      	
+    });  
+				
+*/
+    //autocomplete script
+    $(document).on('focus','.autocomplete_txt',function(){
+        type = $(this).data('type');
+
+        if(type =='countryname' )autoTypeNo=0;
+        if(type =='country_no' )autoTypeNo=1; 
+        if(type =='phone_code' )autoTypeNo=2; 
+        if(type =='country_code' )autoTypeNo=3; 
+
+        $(this).autocomplete({
+        minLength: 0,
+        source: function( request, response ) {
+            $.ajax({
+                url : '{#$linkObtenerItem#}',
+                dataType: "json",
+                type : 'post',
+                data: {
+                   name_startsWith: request.term,
+                   type: 'country_table',
+                   row_num : 1
+                },
+                 success: function( data ) {
+                         response( $.map( data, function( item ) {
+                                var code = item.split("|");
+                                return {
+                                        label: code[0],
+                                        value: code[0],
+                                        data : item
+                                }
+                        }));
+                }
+            });
+        },
+        focus: function() {
+            // prevent value inserted on focus
+            return false;
+        },
+        select: function( event, ui ) {
+            var names = ui.item.data.split("|");						
+            id_arr = $(this).attr('id');
+            id = id_arr.split("_");
+            elementId = id[id.length-1];
+            $('#countryname_'+elementId).val(names[0]);
+            $('#countryid_'+elementId).val(names[1]);
+            $('#country_no_'+elementId).val(names[3]);
+            $('#phone_code_'+elementId).val(names[2]);
+            //$('#country_code_'+elementId).val();
+        }
+        });
+    });
+    $("#myform").validate({
+        event: "submit",
+        rules: {
+        },
+        messages: {
+        },
+        debug: false
+                       /*errorElement: 'div',*/
+                       //errorContainer: $('#errores'),
+    });
+      
+        
+});    
+
+</script>
+{#form_open("",$attributes)#}
+<div class="row">
+    <div class='col-md-6'>
+        <p><b>Cotización No: </b>{#$datosc->id_cotizacion#}</p>
+        <p><b>Fecha del evento No: </b>{#$datosc->fechai#} {#$datosc->horai#} A  {#$datosc->fechaf#} {#$datosc->horaf#}</p>
+    </div>
+    <div class='col-md-6'>
+        <p><b>Cliente: </b>{#$datoscli->nombres#} {#$datoscli->apellidos#}</p>
+        <p><b>NIT/Documento: </b>{#$datoscli->documento#}</p>
+    </div>    
+</div>
+<button type="button" class="btn btn-danger delete">- Borrar</button>
+<button type="button" class="btn btn-success addmore">+ Agregar otro item</button>
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <tbody>
+            <tr>
+                <th>
+                    
+                </th>
+            </tr>
+            <tr>
+                <th><input class="check_all" onclick="select_all()" type="checkbox"></th>
+                <th>No</th>
+                <th>Nombre item</th>
+                <th>Valor</th>
+                <th>IVA / IPC </th>
+                <th>Cantidad</th>
+                <th>Total</th>
+            </tr>
+            {#if !empty($datitems)#}
+            {#foreach $datitems as $dato#}
+            <tr>
+                <td><input class="case" id="case_{#$dato@iteration#}" value="{#$dato@iteration#}" type="checkbox"></td>
+                <td><b id="snum">{#$dato@iteration#}.</b><input type='hidden' value="{#$dato->id_item#}" data-type='countryid' id='countryid_{#$dato@iteration#}' name='countryid[]' ></td>
+                <td><input class="form-control autocomplete_txt" value="{#$dato->nombre#}" data-type="countryname" id="countryname_{#$dato@iteration#}" name="countryname[]" type="text" required></td>
+                <td><input class="form-control" readonly value="{#$dato->valu#}" data-type="country_no" id="country_no_{#$dato@iteration#}" name="country_no[]" type="text"></td>
+                <td><input class="form-control" readonly value="{#$dato->impuesto#}" data-type="phone_code" id="phone_code_{#$dato@iteration#}" name="phone_code[]" type="text"></td>
+                <td><input class="form-control" value="{#$dato->cantidad#}" data-type="country_code" id="country_cantidad_{#$dato@iteration#}" onchange="calcal({#$dato@iteration#})" name="country_cantidad[]" type="text"> </td>
+                <td><input class="form-control" readonly value="{#$dato->valor#}" data-type="country_code" id="country_value_{#$dato@iteration#}" name="country_value[]" type="text"> </td>
+            </tr>
+            {#/foreach#}
+            {#else#}
+            <tr>
+                <td><input class="case" id="case_1" value="1" type="checkbox"></td>
+                <td><b id="snum">1.</b><input type='hidden' data-type='countryid' id='countryid_1' name='countryid[]'/></td>
+                <td><input class="form-control autocomplete_txt" data-type="countryname" id="countryname_1" name="countryname[]" type="text"></td>
+                <td><input class="form-control " readonly data-type="country_no" id="country_no_1" name="country_no[]" type="text"></td>
+                <td><input class="form-control " readonly data-type="phone_code" id="phone_code_1" name="phone_code[]" type="text"></td>
+                <td><input class="form-control " data-type="country_code" id="country_cantidad_1" onchange="calcal(1)" name="country_cantidad[]" type="text"> </td>
+                <td><input class="form-control " readonly data-type="country_code" id="country_value_1" name="country_value[]" type="text"> </td>
+            </tr>
+            {#/if#}
+            
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="6" style="text-align: right;" >Subtotal</td>
+                <td><input type="text" class="form-control " readonly id="stotal" name="stotal" value="{#$datosc->val_subtotal|default:0#}"></td>
+            </tr>
+            <tr>
+                <td colspan="6" style="text-align: right;" >Impoconsumo</td>
+                <td><input type="text" class="form-control " readonly id="tipc" name="tipc" value="{#$datosc->val_ipc|default:0#}"></td>
+            </tr>
+            <tr>
+                <td colspan="6" style="text-align: right;" >Iva</td>
+                <td><input type="text" class="form-control " readonly id="tiva" name="tiva" value="{#$datosc->val_ival|default:0#}" ></td>
+            </tr>
+            <tr>
+                <td colspan="6" style="text-align: right;" >Total</td>
+                <td><input type="text" class="form-control " readonly id="total" name="total" value="{#$datosc->val_total|default:0#}"></td>
+            </tr>
+        </tfoot>
+    </table>
+<div class='col-md-12 right'>
+        {#form_label('Observaciones generales')#}
+        {#form_textarea($descripcion)#}
+    </div>        
+</div>       
+<div class='col-md-12 right'>
+        <div class="form-group">
+            {#form_submit($button)#}
+        </div>
+    </div>        
+</div>
+    
+{#form_close()#}
+
+
+{#include file="admin/tema/footer.htm"#}
+

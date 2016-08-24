@@ -1,0 +1,22 @@
+{#include file="admin/tema/header.htm"#}
+
+<p>{#sprintf('Esta Seguro que desea Eliminar la Categoria: "%s"', $categoria->nombre|string_format:"%s")#}</p>
+
+{#form_open("admin/categorias/borrar_categoria/"|cat:$categoria->id_categoria)#}
+
+  <p>
+  	{#lang('deactivate_confirm_y_label', 'confirm')#}
+    <input type="radio" name="confirm" value="yes" checked="checked" />
+    {#lang('deactivate_confirm_n_label', 'confirm')#}
+    <input type="radio" name="confirm" value="no" />
+  </p>
+
+  {#*form_hidden(array('id'=>$categoria->id_categoria))*#}
+
+  {#form_hidden(['id'=>$categoria->id_categoria])#}
+
+
+  <p>{#form_submit($button)#}</p>
+
+	{#form_close()#}
+{#include file="admin/tema/footer.htm"#}

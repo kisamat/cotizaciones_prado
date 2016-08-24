@@ -116,28 +116,28 @@ class CI_Pagination {
 	 *
 	 * @var	string
 	 */
-	protected $first_link = '&lsaquo; First';
+	protected $first_link = false;
 
 	/**
 	 * Next link
 	 *
 	 * @var	string
 	 */
-	protected $next_link = '&gt;';
+	protected $next_link = '&raquo';
 
 	/**
 	 * Previous link
 	 *
 	 * @var	string
 	 */
-	protected $prev_link = '&lt;';
+	protected $prev_link = '&laquo';
 
 	/**
 	 * Last link
 	 *
 	 * @var	string
 	 */
-	protected $last_link = 'Last &rsaquo;';
+	protected $last_link = FALSE;
 
 	/**
 	 * URI Segment
@@ -151,42 +151,42 @@ class CI_Pagination {
 	 *
 	 * @var	string
 	 */
-	protected $full_tag_open = '';
+	protected $full_tag_open = '<ul class="pagination">';
 
 	/**
 	 * Full tag close
 	 *
 	 * @var	string
 	 */
-	protected $full_tag_close = '';
+	protected $full_tag_close = '</ul>';
 
 	/**
 	 * First tag open
 	 *
 	 * @var	string
 	 */
-	protected $first_tag_open = '';
+	protected $first_tag_open = '<li>';
 
 	/**
 	 * First tag close
 	 *
 	 * @var	string
 	 */
-	protected $first_tag_close = '';
+	protected $first_tag_close = '</li>';
 
 	/**
 	 * Last tag open
 	 *
 	 * @var	string
 	 */
-	protected $last_tag_open = '';
+	protected $last_tag_open = '<li>';
 
 	/**
 	 * Last tag close
 	 *
 	 * @var	string
 	 */
-	protected $last_tag_close = '';
+	protected $last_tag_close = '</li>';
 
 	/**
 	 * First URL
@@ -202,56 +202,56 @@ class CI_Pagination {
 	 *
 	 * @var	string
 	 */
-	protected $cur_tag_open = '<strong>';
+	protected $cur_tag_open = '<li class="active"><a href="#">';
 
 	/**
 	 * Current tag close
 	 *
 	 * @var	string
 	 */
-	protected $cur_tag_close = '</strong>';
+	protected $cur_tag_close = '</a></li>';
 
 	/**
 	 * Next tag open
 	 *
 	 * @var	string
 	 */
-	protected $next_tag_open = '';
+	protected $next_tag_open = '<li>';
 
 	/**
 	 * Next tag close
 	 *
 	 * @var	string
 	 */
-	protected $next_tag_close = '';
+	protected $next_tag_close = '</li>';
 
 	/**
 	 * Previous tag open
 	 *
 	 * @var	string
 	 */
-	protected $prev_tag_open = '';
+	protected $prev_tag_open = '<li class="prev">';
 
 	/**
 	 * Previous tag close
 	 *
 	 * @var	string
 	 */
-	protected $prev_tag_close = '';
+	protected $prev_tag_close = '</li>';
 
 	/**
 	 * Number tag open
 	 *
 	 * @var	string
 	 */
-	protected $num_tag_open = '';
+	protected $num_tag_open = '<li>';
 
 	/**
 	 * Number tag close
 	 *
 	 * @var	string
 	 */
-	protected $num_tag_close = '';
+	protected $num_tag_close = '</li>';
 
 	/**
 	 * Page query string flag

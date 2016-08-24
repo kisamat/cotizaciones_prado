@@ -233,3 +233,6 @@ ul.alert-dropdown {
 .btn.btn-info.nuevo-item{
     float: right;
 }
+.opcion{
+    padding: 5px;
+}

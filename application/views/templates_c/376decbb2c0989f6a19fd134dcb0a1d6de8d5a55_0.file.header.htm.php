@@ -1,17 +1,17 @@
 <?php
-/* Smarty version 3.1.29, created on 2016-08-11 08:01:18
+/* Smarty version 3.1.29, created on 2016-08-23 00:52:58
   from "/www/cotizaciones_prado/application/views/templates/admin/tema/header.htm" */
 
 if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl, array (
   'has_nocache_code' => false,
   'version' => '3.1.29',
-  'unifunc' => 'content_57ac771eedf277_88035247',
+  'unifunc' => 'content_57bb905a9eb9f0_34781769',
   'file_dependency' => 
   array (
     '376decbb2c0989f6a19fd134dcb0a1d6de8d5a55' => 
     array (
       0 => '/www/cotizaciones_prado/application/views/templates/admin/tema/header.htm',
-      1 => 1470920477,
+      1 => 1471909948,
       2 => 'file',
     ),
   ),
@@ -22,7 +22,7 @@ if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl,
     'file:admin/tema/miga.htm' => 1,
   ),
 ),false)) {
-function content_57ac771eedf277_88035247 ($_smarty_tpl) {
+function content_57bb905a9eb9f0_34781769 ($_smarty_tpl) {
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -36,8 +36,8 @@ function content_57ac771eedf277_88035247 ($_smarty_tpl) {
     <meta name="author" content="">
 
     <title>::Administrador de Contenidos::</title>
-<link rel="shortcut icon" href="<?php echo base_url();?>
-assets/admin/images/favicon.gif" type="image/jpg"/>
+    <link rel="shortcut icon" href="<?php echo base_url();?>
+assets/admin/images/favicon.gif" type="image/gif"/>
     <!-- Bootstrap Core CSS -->
     <!--    <link href="<?php echo '<?php ';?>echo base_url() <?php echo '?>';?>assets/css/bootstrap.min.css" rel="stylesheet">-->
     <link href="<?php echo base_url();?>
@@ -51,26 +51,34 @@ assets/admin/css/sb-admin.css" rel="stylesheet">
     <!-- Custom Fonts -->
     <link href="<?php echo base_url();?>
 assets/admin/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-	<?php echo '<script'; ?>
+    <link href="<?php echo base_url();?>
+assets/admin/css/overcast/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" type="text/css"  />
+    <?php echo '<script'; ?>
  src="<?php echo base_url();?>
 assets/admin/calendar/lib/jquery.min.js"><?php echo '</script'; ?>
 >
 
-	<?php echo '<script'; ?>
+    <?php echo '<script'; ?>
  src="<?php echo base_url();?>
 assets/admin/js/moment.js"><?php echo '</script'; ?>
 >
-	<?php echo '<script'; ?>
+    <?php echo '<script'; ?>
  src="<?php echo base_url();?>
 assets/admin/js/bootstrap-datetimepicker.min.js"><?php echo '</script'; ?>
 >
-	
-	<?php echo '<script'; ?>
+    <?php echo '<script'; ?>
+ src="<?php echo base_url();?>
+assets/admin/js/jquery-ui-1.10.4.custom.min.js"><?php echo '</script'; ?>
+>	
+    <?php echo '<script'; ?>
+ src="<?php echo base_url();?>
+assets/js/jquery.validate.min.js"><?php echo '</script'; ?>
+>	
+    <?php echo '<script'; ?>
  src="<?php echo base_url();?>
 libs/ckeditor/ckeditor.js"><?php echo '</script'; ?>
 >
-	<!--<?php echo '<script'; ?>
+    <!--<?php echo '<script'; ?>
  src="<?php echo base_url();?>
 libs/ckfinder/ckfinder.js"><?php echo '</script'; ?>
 >-->

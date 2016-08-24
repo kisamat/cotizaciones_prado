@@ -24,8 +24,12 @@ class Salones_model extends CI_Model {
         return $this;
         
     }
-    function listar_todos() {
-        $query = $this->db->query("SELECT * FROM salones order by nombre;");          
+    function listar_todos($limit, $start) {
+        $this->db->limit($limit, $start);
+        $this->db->where('activo',1);      
+        $this->db->order_by("id_salon", "desc");
+        $query= $this->db->get('salones');
+        
         return $query->result();
     }
     public function add() {
@@ -42,8 +46,14 @@ class Salones_model extends CI_Model {
         return $id;
     }
     public function delete($id) {
-        $this->db->where('id_salon', $id);
-        $id=$this->db->delete('salones');
+        
+        $timestamp = date('Y-m-d G:i:s');        
+        $data['activo']= 0;
+        $data['fechad']= $timestamp;
+        $this->db->where('id_salon =', $id);
+        $id=$this->db->update('salones', $data);
+        //$this->db->where('id_salon', $id);
+        //$id=$this->db->delete('salones');
         //echo $this->db->last_query();
         //exit();
         
@@ -56,6 +66,11 @@ class Salones_model extends CI_Model {
         $query= $this->db->get('salones');
         
         $row = $query->custom_row_object(0, 'Salones_model');
+       //  $row = $query->result();
+         
+        // echo $this->db->last_query();
+
+      
         /*
         if(isset($row)){
             $row->id=  intval($row->id);
@@ -71,9 +86,8 @@ class Salones_model extends CI_Model {
         //return $this->db->count_all('salones');    
         
         $this->db->where('activo',1);
-        $this->db->from("salones");
-        
-        return $this->db->count_all_results();
+        return $this->db->count_all_results('salones');
+
 
     }
     

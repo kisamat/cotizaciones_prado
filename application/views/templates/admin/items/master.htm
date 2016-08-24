@@ -1,0 +1,39 @@
+{#include file="admin/tema/header.htm"#}
+
+<script>
+    $(function () {
+      $('.remove-item').click(function () {
+        $("#delConfirmBtn").attr("href", $(this).attr("href"));
+        $('#myModalDel').modal('show');
+        return false;
+      });
+    });
+</script>
+  
+
+<table class="table table-bordered" cellpadding=0 cellspacing=10>
+	<tr>
+		<th> Nombre </th>
+                <th> Valor por unidad </th>
+                <th> Valor IVA </th>
+                <th colspan="2" class="tit-opcion-admin" > <a href="{#base_url()#}admin/{#$linkCrear#}" class="btn btn-info nuevo-item">Crear nuevo item</a></th>
+
+	</tr>
+	{#foreach from=$data item=$categoria#}
+		<tr>
+            <td>{#$categoria->nombre#}</td>
+            <td>${#$categoria->valor#}</td>
+            <td>{#math equation="x * y" x=$categoria->impuesto y=100 #}%</td>
+            <td>
+                <a href="{#base_url()#}admin/{#$linkEditar#}/{#$categoria->id_item#}" class="btn btn-warning">Editar</a> <br />                        
+            </td>
+            <td>
+                <a href="{#base_url()#}admin/{#$linkEliminar#}/{#$categoria->id_item#}" class="remove-item btn btn-danger">Eliminar</a> <br />                        
+            </td>
+
+		</tr>
+	{#/foreach#}
+</table>
+
+{#include file="admin/tema/modal_delitem.htm"#}
+{#include file="admin/tema/footer.htm"#}

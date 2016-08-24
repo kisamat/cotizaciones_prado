@@ -1,0 +1,209 @@
+{#include file="admin/tema/header.htm"#}
+
+{#form_open("")#}
+
+
+{#if isset($id_salon)#}
+      <p>
+    {#form_label('Escoja el Salon','salon')#} <br />
+    {#form_dropdown($salon, $salones, $id_salon)#}<div id="error">{#form_error('salon')#}</div><br> 
+</p>
+{#else#}
+ <p>
+    {#form_label('Escoja el Salon','salon')#} <br />
+    {#form_dropdown($salon, $salones)#}<div id="error">{#form_error('salon')#}</div><br> 
+</p>
+{#/if#}
+
+
+      <div class="row">    
+    <div class='col-md-3'>
+        <div class="form-group">
+            {#form_label('Escoja la Fecha Inicial','fechai')#}
+            <div class='input-group date' id='datetimepicker6'>                
+                {#form_input($fechai)#}
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>                
+            </div>
+            <div id="error">{#form_error('fechai')#}</div><br>
+        </div>
+    </div>
+
+    <div class='col-md-3'>
+        <div class="form-group">
+            {#form_label('Escoja la Hora Inicial','horai')#}
+            <div class='input-group date' id='datetimepicker8'>
+                {#form_input($horai)#}            
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+            <div id="error">{#form_error('horai')#}</div><br>
+        </div>
+    </div>
+
+
+
+    <div class='col-md-3'>
+        <div class="form-group">
+            {#form_label('Escoja la Fecha Final','fechaf')#}
+            <div class='input-group date' id='datetimepicker7'>
+                {#form_input($fechaf)#} 
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+            <div id="error">{#form_error('fechaf')#}</div><br>
+        </div>
+    </div>
+
+
+    <div class='col-md-3'>
+        <div class="form-group">
+            {#form_label('Escoja la Hora Final','horaf')#}
+            <div class='input-group date' id='datetimepicker9'>
+                {#form_input($horaf)#}     
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+            <div id="error">{#form_error('horaf')#}</div><br>
+        </div>
+    </div>
+</div>
+
+
+    <p>
+            {#form_label('Documento del Cliente','documento')#} <br />
+            {#form_input($documento)#}<div id="error">{#form_error('documento')#}</div><br>
+    </p>
+
+      <p>
+            {#form_label('Nombres del Cliente','nombres')#} <br />
+            {#form_input($nombres)#}<div id="error">{#form_error('nombres')#}</div><br>
+      </p>
+      
+       <p>
+            {#form_label('Apellidos del Cliente','apellidos')#} <br />
+            {#form_input($apellidos)#}<div id="error">{#form_error('apellidos')#}</div><br>
+      </p>
+ 
+       <p>
+            {#form_label('Email del Cliente','email')#} <br />
+            {#form_input($email)#}<div id="error">{#form_error('email')#}</div><br>
+      </p>     
+
+       <p>
+            {#form_label('Teléfono del Cliente','telefono')#} <br />
+            {#form_input($telefono)#}<div id="error">{#form_error('telefono')#}</div><br>
+      </p>
+      
+      <p>
+            {#form_label('Celular del Cliente','celular')#} <br />
+            {#form_input($celular)#}<div id="error">{#form_error('celular')#}</div><br>
+      </p>
+      <p>
+            {#form_label('Dirección del Cliente','direccion')#} <br />
+            {#form_input($direccion)#}<div id="error">{#form_error('direccion')#}</div><br>
+      </p>
+      
+      <p>{#form_submit($button)#}</p>
+
+{#form_close()#}
+
+{#include file="admin/tema/footer.htm"#}
+
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker6').datetimepicker({
+            locale: 'es',
+            format: 'YYYY-MM-DD',
+        });
+
+        $('#datetimepicker7').datetimepicker({
+            useCurrent: false, //Important! See issue #1075
+            locale: 'es',
+            format: 'YYYY-MM-DD',
+        });
+
+        $('#datetimepicker8').datetimepicker({
+            locale: 'es',
+            format: 'LT',
+        });
+
+        $('#datetimepicker9').datetimepicker({
+            useCurrent: false, //Important! See issue #1075
+            locale: 'es',
+            format: 'LT',
+        });
+
+
+        $("#datetimepicker6").on("dp.change", function (e) {
+            $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
+        });
+        $("#datetimepicker7").on("dp.change", function (e) {
+            $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
+        });
+
+
+        $("#datetimepicker8").on("dp.change", function (e) {
+            $('#datetimepicker9').data("DateTimePicker").minDate(e.date);
+        });
+        $("#datetimepicker9").on("dp.change", function (e) {
+            $('#datetimepicker8').data("DateTimePicker").maxDate(e.date);
+        });
+
+
+
+    });
+</script>
+
+<script>
+	$(document).ready(function(){
+	
+		// generamos un evento cada vez que se pulse una tecla
+		$("#documento").change(function(){
+                        var doc= $("#documento").val();
+                        var path= "{#base_url()#}";
+			// enviamos una petición al servidor mediante AJAX enviando el id
+			// introducido por el usuario mediante POST
+			$.post(path + "admin/cotizaciones/llenar/" + doc, {"documento":$("#documento").val()}, function(data){
+			
+				// Si devuelve un nombre lo mostramos, si no, vaciamos la casilla
+				        
+                                if(data.nombres)
+					$("#nombres").val(data.nombres);
+				else
+					$("#nombres").val("");
+					
+				// Si devuelve un apellido lo mostramos, si no, vaciamos la casilla
+				if(data.apellidos)
+					$("#apellidos").val(data.apellidos);
+				else
+					$("#apellidos").val("");
+                                    
+                                if(data.email)
+					$("#email").val(data.email);
+				else
+					$("#email").val("");
+                                    
+                                if(data.telefono)
+					$("#telefono").val(data.telefono);
+				else
+					$("#telefono").val(""); 
+                                    
+                                if(data.celular)
+					$("#celular").val(data.celular);
+				else
+					$("#celular").val("");
+                                
+                                if(data.direccion)
+					$("#direccion").val(data.direccion);
+				else
+					$("#direccion").val("");
+
+			},"json");
+		});
+	});
+	</script>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+
+    <head>
+       <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    </head>
+    <body>
+
+   <br />
+    <div id="bloque">        
+           <p>Atendiendo su amable solicitud estamos enviando cotizacion de los servicios requeridos, para nosotros es un placer poner nuestro Hotel a su Disposición.</p>
+        <br />
+    <table border="1" class="tbform">
+        <tbody>
+        <tr>
+            <th>Salon:</th>
+            <td colspan="3" ><b>{#$nomsal->nombre#}</b></td>
+        </tr>  
+        <tr>
+            <th>Fecha inicio del evento:</th>
+            <td>{#$datosc->fechai#} {#$datosc->horai#}</td>
+            <th>Fecha finalizaci&oacute;n del evento:</th>
+            <td>{#$datosc->fechaf#} {#$datosc->horaf#}</td>
+        </tr> 
+        <tr>
+            <td class="tit-intermedio" colspan="4" >DATOS DEL CLIENTE</td>
+        </tr>
+        <tr>
+          <th>Nombre del cliente</th>
+          <td>{#$datoscli->nombres#} {#$datoscli->apellidos#}</td>
+          <th>NIT / Documento</th>
+          <td>{#$datoscli->documento#}</td>
+        </tr>
+        <tr>
+          <th>Correo el&eacute;ctronico</th>
+          <td>{#$datoscli->email#}</td>
+          <th>N&uacute;mero celular</th>
+          <td>{#$datoscli->celular#}</td>
+        </tr>
+        <tr>
+          <th>Telefono fijo</th>
+          <td>{#$datoscli->telefono#}</td>
+          <th>Direcci&oacute;n contacto</th>
+          <td>{#$datoscli->direccion#}</td>
+        </tr>
+        <tr>
+            <td class="tit-intermedio" colspan="4" >Observaciones</td>
+        </tr>
+        <tr>
+            <td colspan="4" class="item-text">{#$datosc->observaciones#}</td>
+        <tr>
+            <td class="tit-intermedio" colspan="4" >Informaci&oacute;n de la cotización</td>
+        </tr>
+        <tr  >
+            <th style="text-align:center" >Nombre item</th>
+            <th style="text-align:center">Valor</th>
+            <th style="text-align:center">Cantidad</th>
+            <th style="text-align:center">Total</th>
+        </tr>
+        {#foreach $datitems as $dato#}
+        <tr>
+            <td class="item-text">{#$dato->nombre#}</td>
+            <td class="item-num" >{#$dato->valu#}</td>
+            <td class="item-num" >{#$dato->cantidad#}</td>
+            <td class="item-num" >${#$dato->valor|number_format:2:".":","#}</td>
+        </tr>
+        {#/foreach#}
+        </tbody>
+        <tfoot>
+            <tr>
+                <th colspan="3" style="text-align: right;" >Subtotal</th>
+                <td class="item-num">${#$datosc->val_subtotal|number_format:2:".":","#}</td>
+            </tr>
+            <tr>
+                <th colspan="3" style="text-align: right;" >Ipoconsumo</th>
+                <td style="text-align: right; text-height: 700; ">${#$datosc->val_ipc|number_format:2:".":","#}</td>
+            </tr>
+            <tr>
+                <th colspan="3" style="text-align: right;" >Iva</th>
+                <td class="item-num">${#$datosc->val_ival|number_format:2:".":","#}</td>
+            </tr>
+            <tr>
+                <th colspan="3" style="text-align: right;" >Total</th>
+                <td class="item-num">${#$datosc->val_total|number_format:2:".":","#}</td>
+            </tr>
+        </tfoot>
+    </table>
+    </div>
+    </body>
+
+</html>
+
+
+

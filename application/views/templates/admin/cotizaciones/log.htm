@@ -1,0 +1,38 @@
+{#include file="admin/tema/header.htm"#}
+
+<script>
+    $(function () {
+      $('.remove-item').click(function () {
+        $("#delConfirmBtn").attr("href", $(this).attr("href"));
+        $('#myModalDel').modal('show');
+        return false;
+      });
+    });
+</script>
+  
+ 
+<table class="table table-bordered" cellpadding=0 cellspacing=10>
+	<tr>
+		<th> Fecha</th>
+                <th> Cotización No</th>
+                <th> Operación</th>
+                <th> Usuario</th>
+
+	</tr>
+	{#foreach from=$transacciones item=$categoria#}
+		<tr>
+            <td>{#$categoria->fechac|date_format:"%A, %B %e, %Y"#}</td>
+            <td>{#$categoria->id_cotizacion#}</td>
+            <td>{#$categoria->nombre#}</td>
+            <td>{#$categoria->username#}</td>
+            
+
+		</tr>
+	{#/foreach#}
+</table>
+{#$links#}
+
+{#include file="admin/tema/modal_delitem.htm"#}
+{#include file="admin/tema/footer.htm"#}
+
+ 

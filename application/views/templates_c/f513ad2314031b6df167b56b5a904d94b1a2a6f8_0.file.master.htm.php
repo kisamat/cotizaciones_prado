@@ -1,17 +1,17 @@
 <?php
-/* Smarty version 3.1.29, created on 2016-08-11 17:48:03
+/* Smarty version 3.1.29, created on 2016-08-23 03:36:00
   from "/www/cotizaciones_prado/application/views/templates/admin/salones/master.htm" */
 
 if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl, array (
   'has_nocache_code' => false,
   'version' => '3.1.29',
-  'unifunc' => 'content_57ad00a3787c71_08497141',
+  'unifunc' => 'content_57bbb690eab149_11866568',
   'file_dependency' => 
   array (
     'f513ad2314031b6df167b56b5a904d94b1a2a6f8' => 
     array (
       0 => '/www/cotizaciones_prado/application/views/templates/admin/salones/master.htm',
-      1 => 1470955300,
+      1 => 1471919754,
       2 => 'file',
     ),
   ),
@@ -22,7 +22,7 @@ if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl,
     'file:admin/tema/footer.htm' => 1,
   ),
 ),false)) {
-function content_57ad00a3787c71_08497141 ($_smarty_tpl) {
+function content_57bbb690eab149_11866568 ($_smarty_tpl) {
 $_smarty_tpl->smarty->ext->_subtemplate->render($_smarty_tpl, "file:admin/tema/header.htm", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 ?>
 
@@ -87,6 +87,7 @@ $_smarty_tpl->tpl_vars['categoria'] = $__foreach_categoria_0_saved_item;
 }
 ?>
 </table>
+<?php echo $_smarty_tpl->tpl_vars['links']->value;?>
 
 <?php $_smarty_tpl->smarty->ext->_subtemplate->render($_smarty_tpl, "file:admin/tema/modal_delitem.htm", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 ?>

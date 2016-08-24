@@ -1,0 +1,18 @@
+{#include file="admin/tema/header.htm"#}
+
+
+
+<p>El estado actual de su Cotización es: <b>{#$datos->nombre#}</b></p> <br><br> 
+
+{#form_open("")#}
+
+ <p>
+    {#form_label('Escoja el Estado de la Cotización','estado')#} <br />
+    {#form_dropdown($estado, $estados)#}<div id="error">{#form_error('estado')#}</div><br> 
+</p>
+
+
+  <p>{#form_submit($button)#}</p>
+
+	{#form_close()#}
+{#include file="admin/tema/footer.htm"#}

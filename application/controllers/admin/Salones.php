@@ -19,10 +19,22 @@ class Salones extends CI_Controller {
     // redirect if needed, otherwise display the user list
     function index() {
             $this->ion_auth->validate_login();
+            $config['base_url'] = base_url() . "admin/salones/index/$this->idmenu/";
+            $config['total_rows'] = $this->Salones_model->total_registros();
+            $config['per_page'] = 24;
+            $config["uri_segment"] = 5;
+            
+            $this->pagination->initialize($config);
+
+            $page = ($this->uri->segment(5)) ? $this->uri->segment(5) : 0;
+            $data= $this->Salones_model->listar_todos($config["per_page"], $page);
+
+            $links = $this->pagination->create_links();
             //Set the menu according with the type of user
-            $totalreg=$this->Salones_model->total_registros();
+            
             $this->smarty1->assign("listado", $this->listado);
-            $this->smarty1->assign("data", $this->Salones_model->listar_todos());
+            $this->smarty1->assign("data", $data);
+            $this->smarty1->assign("links", $links);    
             $this->smarty1->assign("title", 'Salones hotel el prado');
             $this->smarty1->assign("idmenu", $this->idmenu);
             $this->smarty1->view('admin/salones/master');
